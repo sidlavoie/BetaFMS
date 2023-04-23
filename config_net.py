@@ -8,7 +8,7 @@ def init_net(team1, team2):
 
     scoreswitch = {
         'device_type': 'cisco_ios',
-        'host': '172.16.0.1',
+        'host': '10.0.100.1',
         'username': 'beta-admin',
         'password': 'b3t4b0ts!',
         'secret': 'b3t4b0ts!',
