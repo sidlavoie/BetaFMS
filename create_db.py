@@ -1,9 +1,8 @@
 import sqlite3
-from sqlite3 import *
 
 
 def init_db():
-    connection = connect("main.db")
+    connection = sqlite3.connect("main.db")
     cursor = connection.cursor()
     try:
         cursor.execute("CREATE TABLE teams ("
