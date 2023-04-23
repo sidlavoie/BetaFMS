@@ -7,4 +7,4 @@ serverHostName = ''
 
 init_db()
 init_net("1234", "2345")
-
+reset_net()
