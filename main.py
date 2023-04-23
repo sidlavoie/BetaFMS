@@ -3,7 +3,7 @@ from config_net import *
 from httpserver import *
 
 httpPort = 8080
-serverHostName = "localhost"
+serverHostName = ''
 
 init_db()
 init_net("1010", "2020")
