@@ -56,3 +56,5 @@ def reset_net():
                 'no ip dhcp pool vert',
                 'no ip dhcp pool jaune'
                 ]
+    ssh.send_config_set(commands)
+    ssh.disconnect()
