@@ -13,3 +13,10 @@ Pyhton multiprocessing
   VOIR field/driver_station_connexion ligne 154 pour packets envoyés à DS
   VOIR game/rule ????
   
+  Ajouter ip dhcp excluded address 10.0.100.1 10.0.100.100
+  Ajouter pool admin
+  ajouter ACL (/blob/main/switch_config.txt) ex: access-list 110 permit ip 10.0.1.0 0.0.0.255 host 10.0.100.5
+                                                 access-list 110 permit udp any eq bootpc any eq bootps
+  
+  Pour la radio, le mode FMS Offseason devra être configuré manuellement pour chaque équipe. Une génération des SSID sera faite puis chaque équipe 
+  sera configurée manuellement en FMS OFFSEASON.
