@@ -4,6 +4,8 @@ import re
 
 last_vert = '0000'
 last_jaune = '0000'
+
+
 def set_last(vert, jaune):
     global last_vert
     global last_jaune
@@ -31,8 +33,6 @@ beta_ap = {
 # Call to add network information. Must provide a 4 number string for ip address
 def init_net(teamvert, teamjaune):
     set_last(teamvert, teamjaune)
-    print("last_jaune: ", last_jaune)
-    print("last_vert: ", last_vert)
     vert = re.findall("..?", teamvert)
     jaune = re.findall("..?", teamjaune)
 
