@@ -1,6 +1,10 @@
 from netmiko import *
+from db_main import *
 import re
 
+
+last_vert = '0000'
+last_jaune = '0000'
 
 scoreswitch = {
         'device_type': 'cisco_ios',
@@ -9,13 +13,24 @@ scoreswitch = {
         'password': 'b3t4b0ts!',
         'secret': 'b3t4b0ts!',
     }
+
+beta_ap = {
+    'device_type': 'cisco_ios',
+    'host': '10.0.100.2',
+    'username': 'beta-admin',
+    'password': 'b3t4b0ts!',
+    'secret': 'b3t4b0ts!',
+}
+
+
 # Call to add network information. Must provide a 4 number string for ip address
-def init_net(team1, team2):
-    vert = re.findall("..?", team1)
-    jaune = re.findall("..?", team2)
+def init_net(teamvert, teamjaune):
+    last_vert = teamvert
+    last_jaune = teamjaune
+    vert = re.findall("..?", teamvert)
+    jaune = re.findall("..?", teamjaune)
 
-
-
+    # scoreswitch config
     ssh = ConnectHandler(**scoreswitch)
     ssh.enable()
     ssh.config_mode()
@@ -39,6 +54,34 @@ def init_net(team1, team2):
                 'default-router 10.%s.%s.4' % (jaune[0], jaune[1]),
                 'domain-name beta.local'
                 ]
+    ssh.send_config_set(commands)
+    ssh.disconnect()
+
+    # get SSID and WPA key
+    wifiVert = get_teamWifi(teamvert)
+    wifiJaune = get_teamWifi(teamjaune)
+
+    # ap config
+    ssh = ConnectHandler(**beta_ap)
+    ssh.enable()
+    ssh.config_mode()
+    commands = [
+        'dot11 ssid %s' % wifiVert[0],
+        'vlan 10',
+        'authentication open',
+        'authentication key-management wpa version 2',
+        'mbssid guest-mode',
+        'wpa-psk ascii %s' % wifiVert[1],
+        'dot11 ssid %s' % wifiJaune[0],
+        'vlan 20',
+        'authentication open',
+        'authentication key-management wpa version 2',
+        'mbssid guest-mode',
+        'wpa-psk ascii %s' % wifiJaune[1],
+        'interface dot11Radio 1',
+        'ssid %s' % wifiVert[0],
+        'ssid %s' % wifiJaune[0]
+    ]
     ssh.send_config_set(commands)
     ssh.disconnect()
 
