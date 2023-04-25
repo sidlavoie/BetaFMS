@@ -94,27 +94,16 @@ def init_net(teamvert, teamjaune):
 def reset_net():
     ssh = ConnectHandler(**scoreswitch)
     ssh.enable()
-    commands = ["configure replace nvram:startup-config",
-                "y"
-                ]
-    ssh.send_multiline(commands)
+    output = ssh.send_command_timing("configure replace nvram:startup-config")
+    if 'This' in output:
+        output += ssh.send_command_timing("y")
     ssh.disconnect()
 
 
 def reset_ap():
     ssh = ConnectHandler(**beta_ap)
     ssh.enable()
-    ssh.config_mode()
-    del_vert = get_teamWifi(last_vert)[0]
-    del_jaune = get_teamWifi(last_jaune)[0]
-    print("vert: ", del_vert)
-    print("jaune: ", del_jaune)
-    commands = ["interface dot11Radio 1",
-                "no ssid %s" % del_vert,
-                "no ssid %s" % del_jaune,
-                "exit"
-                "no dot11 ssid %s" % del_vert,
-                "no dot11 ssid %s" % del_jaune
-                ]
-    ssh.send_config_set(commands)
+    output = ssh.send_command_timing("configure replace nvram:startup-config")
+    if 'This' in output:
+        output += ssh.send_command_timing("y")
     ssh.disconnect()
