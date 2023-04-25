@@ -2,9 +2,12 @@ from netmiko import *
 from db_main import *
 import re
 
-
 last_vert = '0000'
 last_jaune = '0000'
+def set_last(vert, jaune):
+    last_vert = vert
+    last_jaune = jaune
+
 
 scoreswitch = {
         'device_type': 'cisco_ios',
@@ -25,8 +28,9 @@ beta_ap = {
 
 # Call to add network information. Must provide a 4 number string for ip address
 def init_net(teamvert, teamjaune):
-    last_vert = teamvert
-    last_jaune = teamjaune
+    set_last(teamvert, teamjaune)
+    print("last_jaune: ", last_jaune)
+    print("last_vert: ", last_vert)
     vert = re.findall("..?", teamvert)
     jaune = re.findall("..?", teamjaune)
 
