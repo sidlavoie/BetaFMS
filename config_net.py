@@ -115,6 +115,8 @@ def reset_ap():
     ssh.config_mode()
     del_vert = get_teamWifi(last_vert)[0]
     del_jaune = get_teamWifi(last_jaune)[0]
+    print("vert: ", del_vert)
+    print("jaune: ", del_jaune)
     commands = ["interface dot11Radio 1",
                 "no ssid %s" % del_vert,
                 "no ssid %s" % del_jaune,
