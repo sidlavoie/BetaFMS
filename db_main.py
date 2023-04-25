@@ -24,8 +24,8 @@ def init_db():
 def reset_db():
     connection = sqlite3.connect("main.db")
     cursor = connection.cursor()
-    cursor.execute("DROP TABLE teams")
-    cursor.execute("DROP TABLE qual_matches")
+    cursor.execute("DROP TABLE IF EXISTS teams")
+    cursor.execute("DROP TABLE IF EXISTS qual_matches")
 
 # Add team and auto generate ssid and WPA key.
 def add_team(number, name, rookie_year):
