@@ -96,8 +96,25 @@ def reset_net():
                 "exit",
                 "interface vlan 20",
                 "no ip address",
-                'no ip dhcp pool vert',
-                'no ip dhcp pool jaune'
+                "no ip dhcp pool vert",
+                "no ip dhcp pool jaune"
+                ]
+    ssh.send_config_set(commands)
+    ssh.disconnect()
+
+
+def reset_ap():
+    ssh = ConnectHandler(**beta_ap)
+    ssh.enable()
+    ssh.config_mode()
+    del_vert = get_teamWifi(last_vert)[0]
+    del_jaune = get_teamWifi(last_jaune)[0]
+    commands = ["interface dot11Radio 1",
+                "no ssid %s" % del_vert,
+                "no ssid %s" % del_jaune,
+                "exit"
+                "no dot11 ssid %s" % del_vert,
+                "no dot11 ssid %s" % del_jaune
                 ]
     ssh.send_config_set(commands)
     ssh.disconnect()
