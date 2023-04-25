@@ -76,13 +76,11 @@ def init_net(teamvert, teamjaune):
         'vlan 10',
         'authentication open',
         'authentication key-management wpa version 2',
-        'mbssid guest-mode',
         'wpa-psk ascii %s' % wifiVert[1],
         'dot11 ssid %s' % wifiJaune[0],
         'vlan 20',
         'authentication open',
         'authentication key-management wpa version 2',
-        'mbssid guest-mode',
         'wpa-psk ascii %s' % wifiJaune[1],
         'interface dot11Radio 1',
         'ssid %s' % wifiVert[0],
@@ -96,16 +94,8 @@ def init_net(teamvert, teamjaune):
 def reset_net():
     ssh = ConnectHandler(**scoreswitch)
     ssh.enable()
-    ssh.config_mode()
-    commands = ["interface vlan 10",
-                "no ip address",
-                "exit",
-                "interface vlan 20",
-                "no ip address",
-                "no ip dhcp pool vert",
-                "no ip dhcp pool jaune"
-                ]
-    ssh.send_config_set(commands)
+    ssh.send_command("configure replace nvram:startup-config")
+    ssh.send_command("y")
     ssh.disconnect()
 
 

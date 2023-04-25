@@ -13,8 +13,7 @@ add_team("4678", "test2", "2023")
 test = get_teamWifi('1234')
 
 init_net("1234", "4678")
+allo = input("Press any key to unconfigure")
 reset_net()
 reset_ap()
-init_net("1234", "4678")
-reset_net()
-reset_ap()
+
