@@ -94,9 +94,10 @@ def init_net(teamvert, teamjaune):
 def reset_net():
     ssh = ConnectHandler(**scoreswitch)
     ssh.enable()
-    output = ssh.send_command_timing("configure replace nvram:startup-config")
-    if 'This' in output:
-        output += ssh.send_command_timing("y")
+    commands = ["configure replace nvram:startup-config",
+                "y"
+                ]
+    ssh.send_multiline(commands)
     ssh.disconnect()
 
 
