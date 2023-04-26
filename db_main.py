@@ -27,24 +27,40 @@ def reset_db():
     cursor.execute("DROP TABLE IF EXISTS teams")
     cursor.execute("DROP TABLE IF EXISTS qual_matches")
 
+
+def generate_ssid():
+    randomSource = string.ascii_lowercase + string.digits
+    ssid = ''.join(random.choice(randomSource) for i in range(8))
+    wpa_key = ''.join(random.choice(randomSource) for i in range(8))
+    return [ssid, wpa_key]
+
+
+def regenerate_wpa(number):
+    connection = sqlite3.connect("main.db")
+    cursor = connection.cursor()
+    creds = generate_ssid()
+    params = (creds[0], creds[1], number)
+    cursor.execute("UPDATE teams SET ssid = ?, wpa_key = ? WHERE team_number = ?", params)
+    print("Sucessfully regenerated WPA credentials for team %s with SSID %s and key %s" % (number, creds[0], creds[1]))
+    connection.commit()
+
+
 # Add team and auto generate ssid and WPA key.
 def add_team(number, name, rookie_year):
 
     if len(number) > 5 or len(name) > 50 or len(rookie_year) != 4:
         raise Exception('Invalid team format - Number must be <= 5 digits and name <= 50 characters!')
 
-    randomSource = string.ascii_lowercase + string.digits
-    ssid = ''.join(random.choice(randomSource) for i in range(8))
-    wpa_key = ''.join(random.choice(randomSource) for i in range(8))
+    creds = generate_ssid()
 
     connection = sqlite3.connect("main.db")
     cursor = connection.cursor()
 
-    params = (number, name, rookie_year, ssid, wpa_key)
+    params = (number, name, rookie_year, creds[0], creds[1])
     cursor.execute("INSERT INTO teams (team_number, team_name, rookie_year, ssid, wpa_key) "
                    "VALUES (?, ?, ?, ?, ?)", params)
     connection.commit()
-    print("Inserted team %s with ssid %s and WPA key %s" % (name, ssid, wpa_key))
+    print("Inserted team %s with ssid %s and WPA key %s" % (name, creds[0], creds[1]))
 
 
 # Get all infos from a specified team

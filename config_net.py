@@ -37,6 +37,7 @@ def init_net(teamvert, teamjaune):
     jaune = re.findall("..?", teamjaune)
 
     # scoreswitch config
+    print("Configuring scoreswitch for team %s and %s..." % (teamvert, teamjaune))
     ssh = ConnectHandler(**scoreswitch)
     ssh.enable()
     ssh.config_mode()
@@ -63,11 +64,12 @@ def init_net(teamvert, teamjaune):
     ssh.send_config_set(commands)
     ssh.disconnect()
 
-    # get SSID and WPA key
+    # get SSID and WPA key from the database
     wifiVert = get_teamWifi(teamvert)
     wifiJaune = get_teamWifi(teamjaune)
 
     # ap config
+    print("Configuring beta-ap with ssid %s and ssid %s..." % (wifiVert[0], wifiJaune[0]))
     ssh = ConnectHandler(**beta_ap)
     ssh.enable()
     ssh.config_mode()
@@ -88,22 +90,27 @@ def init_net(teamvert, teamjaune):
     ]
     ssh.send_config_set(commands)
     ssh.disconnect()
+    print("Network init complete!")
 
 
 # Call to remove all network information
 def reset_net():
-    ssh = ConnectHandler(**scoreswitch)
-    ssh.enable()
-    output = ssh.send_command_timing("configure replace nvram:startup-config")
-    if 'This' in output:
-        output += ssh.send_command_timing("y")
-    ssh.disconnect()
-
-
-def reset_ap():
+    # Reset AP
+    print("Network reset...")
     ssh = ConnectHandler(**beta_ap)
     ssh.enable()
     output = ssh.send_command_timing("configure replace nvram:startup-config")
     if 'This' in output:
         output += ssh.send_command_timing("y")
     ssh.disconnect()
+    print("AP reset complete!")
+
+    # Reset scoreswitch
+    ssh = ConnectHandler(**scoreswitch)
+    ssh.enable()
+    output = ssh.send_command_timing("configure replace nvram:startup-config")
+    if 'This' in output:
+        output += ssh.send_command_timing("y")
+    ssh.disconnect()
+    print("Scoreswitch reset complete!")
+
