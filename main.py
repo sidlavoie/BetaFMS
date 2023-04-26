@@ -17,4 +17,5 @@ input("Waiting...")
 reset_net()
 init_net("1234", "4678")
 input("Waiting 2...")
+
 reset_net()
