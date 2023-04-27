@@ -11,4 +11,9 @@ def test():
         s.listen()
         conn, addr = s.accept()
         with conn:
-            print('Ip découverte: %s' % addr)
+            print(f'Ip découverte: {addr}')
+            while True:
+                data = conn.recv(1024)
+                if not data:
+                    break
+                conn.sendall(data)
