@@ -1,12 +1,14 @@
 import socket
 from time import sleep
 
-HOST = '10.0.100.5'
-PORT = 1750
+
 vert_ip_ds = '0.0.0.0'
 jaune_ip_ds = '0.0.0.0'
 
+
 def test():
+    HOST = '10.0.100.5'
+    PORT = 1750
     with socket.socket(socket.AF_INET, ) as s:
         vert_ip = 0
         jaune_ip = 0
