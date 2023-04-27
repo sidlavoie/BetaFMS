@@ -6,17 +6,17 @@ vert_ip_ds = '0.0.0.0'
 jaune_ip_ds = '0.0.0.0'
 
 
-def test():
+def discoverDS():
     HOST = '10.0.100.5'
     PORT = 1750
     with socket.socket(socket.AF_INET, ) as s:
+        s.bind((HOST, PORT))
+        s.listen()
         vert_ip = 0
         jaune_ip = 0
 
         while True:
             if vert_ip == 0 or jaune_ip == 0:
-                s.bind((HOST, PORT))
-                s.listen()
                 conn, addr = s.accept()
                 with conn:
                     if '12.34' in addr and vert_ip == 0:
