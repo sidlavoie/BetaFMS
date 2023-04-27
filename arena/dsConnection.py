@@ -12,8 +12,3 @@ def test():
         conn, addr = s.accept()
         with conn:
             print(f'Ip découverte: {addr}')
-            while True:
-                data = conn.recv(1024)
-                if not data:
-                    break
-                conn.sendall(data)
