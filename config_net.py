@@ -44,6 +44,10 @@ def init_net(teamvert, teamjaune):
         ssh.enable()
         ssh.config_mode()
         commands = [
+                    'access-list 110 permit ip 10.%s.%s.0 0.0.0.255 host 10.0.100.5' % (vert[0], vert[1]),
+                    'access-list 110 permit udp any eq bootpc any eq bootps',
+                    'access-list 120 permit ip 10.%s.%s.0 0.0.0.255 host 10.0.100.5' % (jaune[0], jaune[1]),
+                    'access-list 120 permit udp any eq bootpc any eq bootps',
                     'interface vlan 10',
                     'ip address 10.%s.%s.4 255.255.255.0' % (vert[0], vert[1]),
                     'interface vlan 20',
@@ -55,7 +59,7 @@ def init_net(teamvert, teamjaune):
                     'lease 3',
                     'network 10.%s.%s.0 255.255.255.0' % (vert[0], vert[1]),
                     'default-router 10.%s.%s.4' % (vert[0], vert[1]),
-                    'domain-name beta.local'
+                    'domain-name beta.local',
                     'exit',
                     'ip dhcp pool jaune',
                     'lease 3',
@@ -77,6 +81,7 @@ def init_net(teamvert, teamjaune):
         ssh.enable()
         ssh.config_mode()
         commands = [
+            ''
             'dot11 ssid %s' % wifiVert[0],
             'vlan 10',
             'authentication open',
