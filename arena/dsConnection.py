@@ -1,33 +1,36 @@
+from threading import *
 import socket
-from time import sleep
+import sys
 
 
-vert_ip_ds = '0.0.0.0'
-jaune_ip_ds = '0.0.0.0'
+def clientthread(conn):
+    buffer = ""
+    while True:
+        data = conn.recv(8192)
+        buffer += data
+        print(buffer)
+    conn.close()
 
 
-def discoverDS():
-    HOST = '10.0.100.5'
-    PORT = 1750
-    with socket.socket(socket.AF_INET, ) as s:
-        s.bind((HOST, PORT))
-        s.listen()
-        vert_ip = 0
-        jaune_ip = 0
+def dsDiscover():
+    try:
+        host = '10.0.100.5'
+        port = 1750
+        tot_socket = 2
+        list_sock = []
+        for i in range (tot_socket):
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            s.bind((host, port))
+            s.listen(10)
+            list_sock.append(s)
 
-        while True:
-            if vert_ip == 0 or jaune_ip == 0:
-                conn, addr = s.accept()
-                with conn:
-                    if '12.34' in addr and vert_ip == 0:
-                        vert_ip = addr
-                        print ("vert: %s", vert_ip)
-                    elif '46.78' in addr and jaune_ip == 0:
-                        jaune_ip = addr
-                        print ("jaune: %s", jaune_ip)
-                    else:
-                        print('waiting for address')
-                        sleep(1)
-            else:
-                break
+        while 1:
+            for j in range(len(list_sock)):
+                conn, addr = list_sock[j].accept()
+                print("Connected with ", addr[0], ":", str(addr[1]))
+                x = Thread(target=clientthread(conn))
+        s.close()
 
+    except KeyboardInterrupt as msg:
+        sys.exit(0)
