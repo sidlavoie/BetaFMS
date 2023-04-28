@@ -15,16 +15,17 @@ def dsDiscover(vert, jaune):
 
     while True:
         conn, addr = s.accept()
-        if vert_ds_ip == '0' or jaune_ds_ip == '0':
-            if teamIPvert in addr[0]:
-                vert_ds_ip = addr[0]
-                print("vert_ds_ip: ", vert_ds_ip)
-            elif teamIPjaune in addr[0]:
-                jaune_ds_ip = addr[0]
-                print("vert_ds_ip: ", jaune_ds_ip)
-            else:
-                print("No DS yet!")
+        print(addr[0])
+        #if vert_ds_ip == '0' or jaune_ds_ip == '0':
+           # if teamIPvert in addr[0]:
+            #    vert_ds_ip = addr[0]
+            #    print("vert_ds_ip: ", vert_ds_ip)
+            #elif teamIPjaune in addr[0]:
+            #    jaune_ds_ip = addr[0]
+            #    print("vert_ds_ip: ", jaune_ds_ip)
+            #else:
+             #   print("No DS yet!")
 
-        else:
-            print("vert_ds_ip: ", vert_ds_ip, " jaune_ds_ip: ", jaune_ds_ip)
-            break
+        #else:
+           # print("vert_ds_ip: ", vert_ds_ip, " jaune_ds_ip: ", jaune_ds_ip)
+            #break
