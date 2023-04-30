@@ -102,6 +102,7 @@ def getMatchInfo(match_number):
     cursor = connection.cursor()
     cursor.execute("SELECT TEAM_VERT, TEAM_JAUNE, time FROM qual_matches "
                    "WHERE match_id = ?", [match_number])
+    print(cursor.fetchall())
     return cursor.fetchall()
 
 
