@@ -35,22 +35,10 @@ def discoverDS(vert, jaune):
         elif addr[0].startswith(f'10.{jaune[:2]}.{jaune[2:4]}'):
             addr_jaune = addr[0]
             print(f'This is the driver station for team {jaune}')
-        elif addr_vert != '0' and addr_jaune != '0':
+
+        if addr_vert != '0' and addr_jaune != '0':
             break
-        else:
-            continue
 
-    # receive data from the driver station
-    #while True:
-       # data = conn.recv(1024)
-       # if not data:
-          #  break
-
-        # decode the data
-        #decoded_data = data.decode()
-
-        # do something with the data (e.g. respond with FMS packets)
-        # ...
     return [addr_vert, addr_jaune]
 
 
