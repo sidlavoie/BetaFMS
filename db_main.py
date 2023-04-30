@@ -100,7 +100,7 @@ def getTeamsTable():
 def getMatchInfo(match_number):
     connection = sqlite3.connect("main.db")
     cursor = connection.cursor()
-    cursor.execute("SELECT TEAM_VERT, TEAM_JAUNE, time FROM qual_matches"
+    cursor.execute("SELECT TEAM_VERT, TEAM_JAUNE, time FROM qual_matches "
                    "WHERE match_id = ?", [match_number])
     return cursor.fetchall()[0]
 
