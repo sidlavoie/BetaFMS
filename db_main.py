@@ -102,7 +102,7 @@ def getMatchInfo(match_number):
     cursor = connection.cursor()
     cursor.execute("SELECT TEAM_VERT, TEAM_JAUNE, time FROM qual_matches "
                    "WHERE match_id = ?", [match_number])
-    return cursor.fetchall()[0]
+    return cursor.fetchall()
 
 
 def addMatch(teamvert, teamjaune): # time à ajouter
