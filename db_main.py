@@ -101,8 +101,7 @@ def getMatchInfo(match_number):
     cursor = connection.cursor()
     cursor.execute("SELECT TEAM_VERT, TEAM_JAUNE, time FROM qual_matches "
                    "WHERE rowid = ?", [match_number])
-    print(cursor.fetchall())
-    return cursor.fetchall()
+    return cursor.fetchall()[0]
 
 
 def addMatch(teamvert, teamjaune): # time à ajouter
@@ -111,3 +110,4 @@ def addMatch(teamvert, teamjaune): # time à ajouter
     params = (teamvert, teamjaune)
     cursor.execute("INSERT INTO qual_matches (TEAM_VERT, TEAM_JAUNE) "
                    "VALUES (?, ?)", params)
+    connection.commit()
