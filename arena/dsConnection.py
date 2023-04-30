@@ -2,7 +2,7 @@ import socket
 import struct
 
 
-# NE FONCTIONNE PAS ENCORE!
+# Run to discover the ip addresses to use
 def discoverDS(vert, jaune):
     fms_ip = '10.0.100.5'
     fms_port = 1750
