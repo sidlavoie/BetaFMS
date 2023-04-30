@@ -1,6 +1,7 @@
 from http.server import *
 import time
 
+# NE FONCTIONNE PAS ENCORE!!!!!!!
 class MyServer(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)

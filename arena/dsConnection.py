@@ -1,31 +1,69 @@
 import socket
-import re
+import struct
 
 
-def dsDiscover(vert, jaune):
-    vert_ds_ip = '0'
-    jaune_ds_ip = '0'
-    teamIPvert = re.findall("..?", vert)
-    teamIPjaune = re.findall("..?", jaune)
+# NE FONCTIONNE PAS ENCORE!
+def discoverDS(vert, jaune):
+    fms_ip = '10.0.100.5'
+    fms_port = 1750
 
-    s = socket.socket()
+    # create a TCP socket
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    sock.bind((fms_ip, fms_port))
+    sock.listen(1)
 
-    s.bind(('10.0.100.5', 1750))
-    s.listen()
+    print(f'Listening for driver station packets on {fms_ip}:{fms_port}...')
 
-    while True:
-        conn, addr = s.accept()
-        print(addr[0])
-        #if vert_ds_ip == '0' or jaune_ds_ip == '0':
-           # if teamIPvert in addr[0]:
-            #    vert_ds_ip = addr[0]
-            #    print("vert_ds_ip: ", vert_ds_ip)
-            #elif teamIPjaune in addr[0]:
-            #    jaune_ds_ip = addr[0]
-            #    print("vert_ds_ip: ", jaune_ds_ip)
-            #else:
-             #   print("No DS yet!")
+    # wait for a connection from the driver station
+    conn, addr = sock.accept()
+    print(f'Received connection from {addr[0]}')
 
-        #else:
-           # print("vert_ds_ip: ", vert_ds_ip, " jaune_ds_ip: ", jaune_ds_ip)
-            #break
+    # determine which team the driver station is for
+    if addr[0].startswith(f'10.{vert[:2]}.{vert[2:4]}'):
+        print(f'This is the driver station for team {vert}')
+    elif addr[0].startswith(f'10.{jaune[:2]}.{jaune[2:4]}'):
+        print(f'This is the driver station for team {jaune}')
+    else:
+        print('Unknown driver station')
+
+    # receive data from the driver station
+    #while True:
+       # data = conn.recv(1024)
+       # if not data:
+          #  break
+
+        # decode the data
+        #decoded_data = data.decode()
+
+        # do something with the data (e.g. respond with FMS packets)
+        # ...
+
+    conn.close()
+
+def send_fms_packet(ip_address, fms_packet):
+    """Send an FMS packet to the specified IP address."""
+    FMS_PORT = 1150
+
+    # Create a UDP socket and send the packet
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    sock.sendto(fms_packet, (ip_address, FMS_PORT))
+    sock.close()
+
+
+def handle_ds_packet(packet, vert, jaune):
+    """Handle an incoming driver station packet."""
+    # Parse the packet to extract the team number and joystick data
+    team_number, joystick_data = struct.unpack('!B6s', packet)
+
+    # Convert the joystick data to a tuple of six 8-bit values
+    joystick_values = tuple(joystick_data[i] for i in range(6))
+
+    # Determine which side of the field the team is on
+    if team_number == vert:
+        side = "green"
+    elif team_number == jaune:
+        side = "yellow"
+    else:
+        return
+
