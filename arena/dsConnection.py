@@ -13,12 +13,18 @@ def discoverDS(vert, jaune):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     sock.bind((fms_ip, fms_port))
-    sock.listen(1)
+    sock.setblocking(False)
 
     print(f'Listening for driver station packets on {fms_ip}:{fms_port}...')
     while True:
-    # wait for a connection from the driver station
-        conn, addr = sock.accept()
+        try:
+            # wait for a connection from the driver station
+            conn, addr = sock.accept()
+        except socket.timeout:
+            continue
+        except BlockingIOError:
+            continue
+
         print(f'Received connection from {addr[0]}')
 
     # determine which team the driver station is for
@@ -31,7 +37,7 @@ def discoverDS(vert, jaune):
         elif addr_vert != '0' and addr_jaune != '0':
             break
         else:
-            print('')
+            continue
 
     # receive data from the driver station
     #while True:
@@ -44,7 +50,6 @@ def discoverDS(vert, jaune):
 
         # do something with the data (e.g. respond with FMS packets)
         # ...
-    conn.close()
     return [addr_vert, addr_jaune]
 
 
