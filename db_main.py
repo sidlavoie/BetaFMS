@@ -15,7 +15,6 @@ def init_db():
                    "wpa_key VARCHAR(8))")
 
     cursor.execute("CREATE TABLE IF NOT EXISTS qual_matches ("
-                   "match_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                    "time DATETIME, "
                    "TEAM_VERT VARCHAR(5), "
                    "TEAM_JAUNE VARCHAR(5))")
@@ -101,7 +100,7 @@ def getMatchInfo(match_number):
     connection = sqlite3.connect("main.db")
     cursor = connection.cursor()
     cursor.execute("SELECT TEAM_VERT, TEAM_JAUNE, time FROM qual_matches "
-                   "WHERE match_id = ?", [match_number])
+                   "WHERE rowid = ?", [match_number])
     print(cursor.fetchall())
     return cursor.fetchall()
 
