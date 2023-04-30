@@ -16,5 +16,3 @@ add_team("5678", "test2", "2023")
 addMatch("1234", "5678")
 reset_net()
 loadNextMatch()
-
-
