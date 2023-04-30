@@ -27,12 +27,14 @@ def discoverDS(vert, jaune):
             continue
 
         print(f'Received connection from {addr[0]}')
+        packet, addr = sock.recvfrom(1024)
 
+        received_team = str((int(packet[4]) << 8) + int(packet[5]))
         # determine which team the driver station is for
-        if addr[0].startswith(f'10.{vert[:2]}.{vert[2:4]}'):
+        if received_team == vert:
             addr_vert = addr[0]
             print(f'This is the driver station for team {vert}')
-        elif addr[0].startswith(f'10.{jaune[:2]}.{jaune[2:4]}'):
+        elif received_team == jaune:
             addr_jaune = addr[0]
             print(f'This is the driver station for team {jaune}')
 

@@ -16,4 +16,20 @@ Pyhton multiprocessing
   
   ajouter ACL (/blob/main/switch_config.txt) ex: access-list 110 permit ip 10.0.1.0 0.0.0.255 host 10.0.100.5
                                                  access-list 110 permit udp any eq bootpc any eq bootps
-  
+
+  Packet de contrôle FRC
+  BYTES
+  0-1 numéro de packet, big-endian, deux bytes
+  2 version de protocole = 0
+  3 status (Auto = 0x02, Enabled = 0x04, Estop = 0x80)
+  4 inconnu = 0
+  5 station d'alliance
+  6 type de match (pratique = 1, qualification = 2, elimination = 3 sinon = 0)
+  7-8 numéro de match (big-endian. sinon 7=0, 8=1)
+  9 numéro de répétition du match
+  10 - 19 temps (en commençant par les nanosecondes)
+  20 - 21 nombre de temps restant au match (big endian)
+
+  Packet de status DS
+  BYTES
+
