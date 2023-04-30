@@ -1,3 +1,4 @@
+# This contains all the operations on the database
 import sqlite3
 import random
 import string
@@ -14,9 +15,10 @@ def init_db():
                    "wpa_key VARCHAR(8))")
 
     cursor.execute("CREATE TABLE IF NOT EXISTS qual_matches ("
+                   "match_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                    "time DATETIME, "
-                   "TEAM1 VARCHAR(5), "
-                   "TEAM2 VARCHAR(5))")
+                   "TEAM_VERT VARCHAR(5), "
+                   "TEAM_JAUNE VARCHAR(5))")
     return 0
 
 
@@ -93,3 +95,19 @@ def getTeamsTable():
     cursor = connection.cursor()
     cursor.execute("SELECT * FROM teams")
     return cursor.fetchall()
+
+
+def getMatchInfo(match_number):
+    connection = sqlite3.connect("main.db")
+    cursor = connection.cursor()
+    cursor.execute("SELECT TEAM_VERT, TEAM_JAUNE, time FROM qual_matches"
+                   "WHERE match_id = ?", [match_number])
+    return cursor.fetchall()[0]
+
+
+def addMatch(teamvert, teamjaune): # time à ajouter
+    connection = sqlite3.connect("main.db")
+    cursor = connection.cursor()
+    params = (teamvert, teamjaune)
+    cursor.execute("INSERT INTO qual_matches (TEAM_VERT, TEAM_JAUNE) "
+                   "VALUES (?, ?)", params)

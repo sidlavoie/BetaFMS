@@ -54,20 +54,3 @@ def send_fms_packet(ip_address, fms_packet):
     sock.sendto(fms_packet, (ip_address, FMS_PORT))
     sock.close()
 
-
-def handle_ds_packet(packet, vert, jaune):
-    """Handle an incoming driver station packet."""
-    # Parse the packet to extract the team number and joystick data
-    team_number, joystick_data = struct.unpack('!B6s', packet)
-
-    # Convert the joystick data to a tuple of six 8-bit values
-    joystick_values = tuple(joystick_data[i] for i in range(6))
-
-    # Determine which side of the field the team is on
-    if team_number == vert:
-        side = "green"
-    elif team_number == jaune:
-        side = "yellow"
-    else:
-        return
-
