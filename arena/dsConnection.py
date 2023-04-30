@@ -29,7 +29,7 @@ def discoverDS(vert, jaune):
         print(f'Received connection from {addr[0]}')
         packet = conn.recv(1024)
 
-        received_team = str((int(packet[4]) << 8) + int(packet[5]))
+        received_team = str((int(packet[3]) << 8) + int(packet[4]))
         # determine which team the driver station is for
         if received_team == vert:
             addr_vert = addr[0]
