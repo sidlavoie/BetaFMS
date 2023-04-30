@@ -14,6 +14,7 @@ def discoverDS(vert, jaune):
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     sock.bind((fms_ip, fms_port))
     sock.setblocking(False)
+    sock.listen()
 
     print(f'Listening for driver station packets on {fms_ip}:{fms_port}...')
     while True:
