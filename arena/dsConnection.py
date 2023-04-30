@@ -6,6 +6,8 @@ import struct
 def discoverDS(vert, jaune):
     fms_ip = '10.0.100.5'
     fms_port = 1750
+    addr_vert = '0'
+    addr_jaune = '0'
 
     # create a TCP socket
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -14,18 +16,22 @@ def discoverDS(vert, jaune):
     sock.listen(1)
 
     print(f'Listening for driver station packets on {fms_ip}:{fms_port}...')
-
+    while True:
     # wait for a connection from the driver station
-    conn, addr = sock.accept()
-    print(f'Received connection from {addr[0]}')
+        conn, addr = sock.accept()
+        print(f'Received connection from {addr[0]}')
 
     # determine which team the driver station is for
-    if addr[0].startswith(f'10.{vert[:2]}.{vert[2:4]}'):
-        print(f'This is the driver station for team {vert}')
-    elif addr[0].startswith(f'10.{jaune[:2]}.{jaune[2:4]}'):
-        print(f'This is the driver station for team {jaune}')
-    else:
-        print('Unknown driver station')
+        if addr[0].startswith(f'10.{vert[:2]}.{vert[2:4]}'):
+            addr_vert = addr[0]
+            print(f'This is the driver station for team {vert}')
+        elif addr[0].startswith(f'10.{jaune[:2]}.{jaune[2:4]}'):
+            addr_jaune = addr[0]
+            print(f'This is the driver station for team {jaune}')
+        elif addr_vert != '0' and addr_jaune != '0':
+            break
+        else:
+            print('')
 
     # receive data from the driver station
     #while True:
@@ -38,8 +44,9 @@ def discoverDS(vert, jaune):
 
         # do something with the data (e.g. respond with FMS packets)
         # ...
-
     conn.close()
+    return [addr_vert, addr_jaune]
+
 
 def send_fms_packet(ip_address, fms_packet):
     """Send an FMS packet to the specified IP address."""
