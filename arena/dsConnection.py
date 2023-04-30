@@ -27,7 +27,7 @@ def discoverDS(vert, jaune):
             continue
 
         print(f'Received connection from {addr[0]}')
-        packet, addr = sock.recvfrom(1024)
+        packet = conn.recv(1024)
 
         received_team = str((int(packet[4]) << 8) + int(packet[5]))
         # determine which team the driver station is for
