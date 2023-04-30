@@ -28,7 +28,7 @@ def discoverDS(vert, jaune):
 
         print(f'Received connection from {addr[0]}')
 
-    # determine which team the driver station is for
+        # determine which team the driver station is for
         if addr[0].startswith(f'10.{vert[:2]}.{vert[2:4]}'):
             addr_vert = addr[0]
             print(f'This is the driver station for team {vert}')
