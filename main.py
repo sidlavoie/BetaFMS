@@ -16,8 +16,5 @@ add_team("5678", "test2", "2023")
 addMatch("1234", "5678")
 reset_net()
 loadNextMatch()
-vert = DriverStation('1234')
-jaune = DriverStation('5678')
-vert.dsIP, jaune.dsIP = discoverDS(vert.team_id, jaune.team_id)
-print(vert.team_id, vert.dsIP)
-print(jaune.team_id, jaune.dsIP)
+
+
