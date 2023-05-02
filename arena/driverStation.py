@@ -1,4 +1,6 @@
 # This file represents the class for a Driver station
+from datetime import datetime
+
 
 class DriverStation:
     def __init__(self, team_id):
@@ -20,3 +22,57 @@ class DriverStation:
         self.missed_packet_offset = None
         self.tcp_conn = None
         self.udp_conn = None
+
+    def encodeControlPacket(match_number):
+        packet = [0] * 22
+
+        packet[0] = (self.packet_count >> 8) & 0xFF
+        packet[1] = self.packet_count & 0xFF
+
+        packet[2] = 0 # version
+        
+        # op mode
+        if self.auto is not None:
+            packet [3] = 2
+        elif self.enabled is not None:
+            packet[3] = 4
+        elif self.estop is not None:
+            packet[3] = 8
+        else:
+            packet[3] = 0
+
+        packet[4] = 0 # not used
+        packet[5] = 0 # driver station ID (see what 0 does)
+
+        # match type (set to qualification)
+        packet[6] = 2
+
+        packet[7] = (match_number >> 8) & 0xFF # match number
+        packet[8] = match_number & 0xFF
+
+        packet[9] = 1 # match repeat
+
+        # encode current time
+        currentTime = datetime.now()
+
+        packet[10] = (currentTime.microsecond // 1000 >> 24) & 0xFF
+        packet[11] = (currentTime.microsecond // 1000 >> 16) & 0xFF
+        packet[12] = (currentTime.microsecond // 1000 >> 8) & 0xFF
+        packet[13] = (currentTime.microsecond // 1000) & 0xFF
+        packet[14] = currentTime.second
+        packet[15] = currentTime.minute
+        packet[16] = currentTime.hour
+        packet[17] = currentTime.day
+        packet[18] = currentTime.month
+        packet[19] = (currentTime.year - 1900) & 0xFF
+
+        # il reste les secondes à mettre
+        packet[20] = 0
+        packet[21] = 0
+
+        ba = bytearray(packet)
+
+        self.packet_count += 1
+
+        return ba
+
