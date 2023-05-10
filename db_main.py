@@ -111,3 +111,9 @@ def addMatch(teamvert, teamjaune): # time à ajouter
     cursor.execute("INSERT INTO qual_matches (TEAM_VERT, TEAM_JAUNE) "
                    "VALUES (?, ?)", params)
     connection.commit()
+
+def deleteTeam(number):
+    connection = sqlite3.connect("main.db")
+    cursor = connection.cursor()
+    cursor.execute("DELETE FROM teams WHERE team_number = ?", number)
+    connection.commit()
