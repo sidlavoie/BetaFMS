@@ -2,7 +2,6 @@
 from datetime import datetime
 import socket
 
-
 class DriverStation:
     def __init__(self, team_id, match_number):
         self.team_id = team_id
