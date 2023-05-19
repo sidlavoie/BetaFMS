@@ -16,7 +16,9 @@ def loadNextMatch():
     vert = DriverStation(match[0], CURRENT_MATCH)
     jaune = DriverStation(match[1], CURRENT_MATCH)
     vert.dsIP, jaune.dsIP = discoverDS(vert.team_id, jaune.team_id)
-
+    vert.auto = True
+    jaune.auto = True
+    vert.enabled = True
     print("DS decouvert. Envoi de packets")
     while True:
         jaune.send_udp_fms_packet()
