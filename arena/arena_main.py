@@ -21,5 +21,5 @@ def loadNextMatch():
     while True:
         jaune.send_fms_packet()
         vert.send_fms_packet()
-        sleep(0.01)
+        sleep(0.25)
 
