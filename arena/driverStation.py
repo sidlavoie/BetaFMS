@@ -91,8 +91,8 @@ class DriverStation:
         fms_ip = "10.0.100.5"
         self.udp_conn = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-    def send_fms_packet(self):
+    def send_udp_fms_packet(self):
         """Encode and send an FMS packet to the specified IP address."""
         fms_port = 1150
         self.udp_conn.sendto(self.encodeControlPacket(), (self._dsIP, fms_port))
-        print("TEST: ", self.encodeControlPacket())
+        print(self. packet_count, " TEST: ", self.encodeControlPacket())
