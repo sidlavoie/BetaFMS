@@ -1,5 +1,6 @@
 import socket
 import struct
+import sys
 
 
 # Run to discover the ip addresses to use
@@ -12,7 +13,11 @@ def discoverDS(vert, jaune):
     # create a TCP socket
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    sock.bind((fms_ip, fms_port))
+    try:
+        sock.bind((fms_ip, fms_port))
+    except OSError:
+        print('Ip address not found! Set one IP interface to 10.0.100.5 and restart BetaFMS')
+        sys.exit()
     sock.setblocking(False)
     sock.listen()
 
