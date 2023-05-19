@@ -2,6 +2,7 @@ from db_main import *
 from config_net import init_net
 from arena.driverStation import DriverStation
 from arena.dsConnection import discoverDS
+from time import sleep
 
 CURRENT_MATCH = 0
 
@@ -12,9 +13,13 @@ def loadNextMatch():
     match = getMatchInfo(CURRENT_MATCH)
     print(match)
     init_net(match[0], match[1])
-    vert = DriverStation(match[0])
-    jaune = DriverStation(match[1])
+    vert = DriverStation(match[0], CURRENT_MATCH)
+    jaune = DriverStation(match[1], CURRENT_MATCH)
     vert.dsIP, jaune.dsIP = discoverDS(vert.team_id, jaune.team_id)
-    print(vert.team_id, vert.dsIP)
-    print(jaune.team_id, jaune.dsIP)
+
+    print("DS decouvert. Envoi de packets")
+    while True:
+        jaune.send_fms_packet()
+        vert.send_fms_packet()
+        sleep(0.01)
 

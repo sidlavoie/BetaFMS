@@ -44,13 +44,3 @@ def discoverDS(vert, jaune):
 
     return [addr_vert, addr_jaune]
 
-
-def send_fms_packet(ip_address, fms_packet):
-    """Send an FMS packet to the specified IP address."""
-    FMS_PORT = 1150
-
-    # Create a UDP socket and send the packet
-    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    sock.sendto(fms_packet, (ip_address, FMS_PORT))
-    sock.close()
-

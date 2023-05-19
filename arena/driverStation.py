@@ -1,11 +1,13 @@
 # This file represents the class for a Driver station
 from datetime import datetime
+import socket
 
 
 class DriverStation:
-    def __init__(self, team_id):
+    def __init__(self, team_id, match_number):
         self.team_id = team_id
-        self.dsIP = None
+        self.match_number = match_number
+        self._dsIP = None
         self.auto = None
         self.enabled = None
         self.estop = None
@@ -23,17 +25,27 @@ class DriverStation:
         self.tcp_conn = None
         self.udp_conn = None
 
-    def encodeControlPacket(match_number):
+    @property
+    def dsIP(self):
+        return self._dsIP
+
+    # Create the socket upon discovering the IP Address
+    @dsIP.setter
+    def dsIP(self, value):
+        self._dsIP = value
+        self.create_socket()
+
+    def encodeControlPacket(self):
         packet = [0] * 22
 
         packet[0] = (self.packet_count >> 8) & 0xFF
         packet[1] = self.packet_count & 0xFF
 
-        packet[2] = 0 # version
+        packet[2] = 0  # version
         
         # op mode
         if self.auto is not None:
-            packet [3] = 2
+            packet[3] = 2
         elif self.enabled is not None:
             packet[3] = 4
         elif self.estop is not None:
@@ -41,16 +53,16 @@ class DriverStation:
         else:
             packet[3] = 0
 
-        packet[4] = 0 # not used
-        packet[5] = 0 # driver station ID (see what 0 does)
+        packet[4] = 0  # not used
+        packet[5] = 0  # driver station ID (see what 0 does)
 
         # match type (set to qualification)
         packet[6] = 2
 
-        packet[7] = (match_number >> 8) & 0xFF # match number
-        packet[8] = match_number & 0xFF
+        packet[7] = (self.match_number >> 8) & 0xFF # match number
+        packet[8] = self.match_number & 0xFF
 
-        packet[9] = 1 # match repeat
+        packet[9] = 1  # match repeat
 
         # encode current time
         currentTime = datetime.now()
@@ -76,3 +88,13 @@ class DriverStation:
 
         return ba
 
+    def create_socket(self):
+        fms_port = 1150
+        fms_ip = "10.0.100.5"
+        self.udp_conn = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self.udp_conn.bind((fms_ip, fms_port))
+
+    def send_fms_packet(self):
+        """Encode and send an FMS packet to the specified IP address."""
+        fms_port = 1150
+        self.udp_conn.sendto(self.encodeControlPacket(), (self._dsIP, fms_port))
