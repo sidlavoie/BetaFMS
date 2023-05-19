@@ -18,7 +18,7 @@ def loadNextMatch():
     vert.dsIP, jaune.dsIP = discoverDS(vert.team_id, jaune.team_id)
 
     print("DS decouvert. Envoi de packets")
-    #while True:
-       # jaune.send_udp_fms_packet()
-       # vert.send_udp_fms_packet()
-        #sleep(0.25)
+    while True:
+        jaune.send_udp_fms_packet()
+        vert.send_udp_fms_packet()
+        sleep(0.25)
