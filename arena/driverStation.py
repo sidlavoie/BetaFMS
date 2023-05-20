@@ -53,7 +53,7 @@ class DriverStation:
             packet[3] = 0
 
         packet[4] = 0  # not used
-        packet[5] = 1  # driver station ID (see what 0 does)
+        packet[5] = 0  # driver station ID (see what 0 does)
 
         # match type (set to qualification)
         packet[6] = 2
