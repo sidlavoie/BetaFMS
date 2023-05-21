@@ -96,7 +96,7 @@ class DriverStation:
 
     def send_udp_fms_packet(self):
         """Encode and send an FMS packet to the specified IP address."""
-        while self.running_flag.is_set:
+        while self.running_flag.is_set():
             fms_port = 1121
             self.udp_conn.sendto(self.encodeControlPacket(), (self._dsIP, fms_port))
             sleep(0.25)
