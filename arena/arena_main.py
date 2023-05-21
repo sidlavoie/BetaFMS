@@ -21,10 +21,10 @@ def loadNextMatch():
     print("DS decouvert. Envoi de packets")
 
     # Starts communication with the DS
-    thread_vert = threading.Thread(target=vert.send_udp_fms_packet())
+    thread_vert = threading.Thread(target=vert.send_udp_fms_packet)
     vert.running_flag.set()
     thread_vert.start()
-    thread_jaune = threading.Thread(target=jaune.send_udp_fms_packet())
+    thread_jaune = threading.Thread(target=jaune.send_udp_fms_packet)
     jaune.running_flag.set()
     thread_jaune.start()
 
