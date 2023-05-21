@@ -12,12 +12,13 @@ def loadNextMatch():
     CURRENT_MATCH += 1
     match = getMatchInfo(CURRENT_MATCH)
     print(match)
+    # Initialize Network
     init_net(match[0], match[1])
+    # Create DriverStation objects
     vert = DriverStation(match[0], CURRENT_MATCH)
     jaune = DriverStation(match[1], CURRENT_MATCH)
+    # Find IP of the DS and write it to the object
     vert.dsIP, jaune.dsIP = discoverDS(vert.team_id, jaune.team_id)
-
-    print("DS decouvert. Envoi de packets")
 
     # Starts communication with the DS
     vert.udpThread = threading.Thread(target=vert.send_udp_fms_packet)
@@ -35,6 +36,9 @@ def end_match(vert, jaune):
     vert.udpThread.join()
     jaune.running_flag.clear()
     jaune.udpThread.join()
+    # Deallocate the objects
+    vert = None
+    jaune = None
 
 
 
