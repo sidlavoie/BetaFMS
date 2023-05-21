@@ -1,6 +1,8 @@
 # This file represents the class for a Driver station
 from datetime import datetime
 import socket
+import threading
+from time import sleep
 
 class DriverStation:
     def __init__(self, team_id, match_number):
@@ -23,6 +25,7 @@ class DriverStation:
         self.missed_packet_offset = None
         self.tcp_conn = None
         self.udp_conn = None
+        self.running_flag = threading.Event()  # Clear to stop sending udp packets
 
     @property
     def dsIP(self):
@@ -93,5 +96,8 @@ class DriverStation:
 
     def send_udp_fms_packet(self):
         """Encode and send an FMS packet to the specified IP address."""
-        fms_port = 1121
-        self.udp_conn.sendto(self.encodeControlPacket(), (self._dsIP, fms_port))
+        while self.running_flag.is_set:
+            fms_port = 1121
+            self.udp_conn.sendto(self.encodeControlPacket(), (self._dsIP, fms_port))
+            sleep(0.25)
+            print(self.team_id)  # TEST
