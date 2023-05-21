@@ -26,6 +26,7 @@ class DriverStation:
         self.tcp_conn = None
         self.udp_conn = None
         self.running_flag = threading.Event()  # Clear to stop sending udp packets
+        self.udpThread = None
 
     @property
     def dsIP(self):
@@ -100,4 +101,3 @@ class DriverStation:
             fms_port = 1121
             self.udp_conn.sendto(self.encodeControlPacket(), (self._dsIP, fms_port))
             sleep(0.25)
-            print(self.team_id)  # TEST

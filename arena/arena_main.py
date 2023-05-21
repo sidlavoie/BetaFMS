@@ -2,7 +2,6 @@ from db_main import *
 from config_net import init_net
 from arena.driverStation import DriverStation
 from arena.dsConnection import discoverDS
-from time import sleep
 import threading
 
 CURRENT_MATCH = 0
@@ -21,19 +20,21 @@ def loadNextMatch():
     print("DS decouvert. Envoi de packets")
 
     # Starts communication with the DS
-    thread_vert = threading.Thread(target=vert.send_udp_fms_packet)
+    vert.udpThread = threading.Thread(target=vert.send_udp_fms_packet)
     vert.running_flag.set()
-    thread_vert.start()
-    thread_jaune = threading.Thread(target=jaune.send_udp_fms_packet)
+    vert.udpThread.start()
+    jaune.udpThread = threading.Thread(target=jaune.send_udp_fms_packet)
     jaune.running_flag.set()
-    thread_jaune.start()
+    jaune.udpThread.start()
+    return vert, jaune
 
-    sleep(10)
-    print('Fin de match')
+
+def end_match(vert, jaune):
+    # This stops the threads. DO NOT REMOVE!!!
     vert.running_flag.clear()
-    thread_vert.join()
+    vert.udpThread.join()
     jaune.running_flag.clear()
-    thread_jaune.join()
-    print("Fin du programme")
+    jaune.udpThread.join()
+
 
 
