@@ -19,5 +19,5 @@ init_db()
 #sleep(10)
 #end_match(vert, jaune)
 test_scc = SCC(100)
-while (True):
+while True:
     test_scc.receiveStatus()
