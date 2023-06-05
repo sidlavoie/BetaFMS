@@ -34,5 +34,5 @@ class SCC:
                 continue
 
             print(f'Received connection from {addr[0]}')
-            packet = conn.recv(24)
+            packet = conn.recv(1024)
             print(packet)
