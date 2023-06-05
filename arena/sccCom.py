@@ -7,6 +7,7 @@ def createSccSockets(fms_port):
     sockscc.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
     sockscc.bind((fms_ip, fms_port))
+    print(sockscc.getsockname())
 
     return sockscc
 
