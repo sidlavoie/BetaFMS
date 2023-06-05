@@ -4,6 +4,7 @@ import socket
 import threading
 from time import sleep
 
+
 class DriverStation:
     def __init__(self, team_id, match_number):
         self.team_id = team_id
