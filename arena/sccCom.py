@@ -3,7 +3,7 @@ import socket
 
 def createSccSockets(fms_port):
     fms_ip = '10.0.100.5'
-    sockscc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sockscc = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sockscc.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
     sockscc.bind((fms_ip, fms_port))
@@ -19,20 +19,7 @@ class SCC:
         self.estopEnabled = True
 
     def receiveStatus(self):
-        self.sock.setblocking(False)
-        self.sock.listen()
-
-        print(f'Listening for SCC packets on port {self.port}...')
-        print(self.sock.getsockname())
         while True:
-            try:
-                # wait for a connection from the scc
-                conn, addr = self.sock.accept()
-            except socket.timeout:
-                continue
-            except BlockingIOError:
-                continue
+            data, addr = self.sock.recvfrom(1024)
+            print("received message: %s" % data)
 
-            print(f'Received connection from {addr[0]}')
-            packet = conn.recv(1024)
-            print(packet)
