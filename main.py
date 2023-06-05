@@ -18,6 +18,6 @@ init_db()
 #vert, jaune = loadNextMatch()
 #sleep(10)
 #end_match(vert, jaune)
-test_scc = SCC(100)
+test_scc = SCC(5001)
 while True:
     test_scc.receiveStatus()
