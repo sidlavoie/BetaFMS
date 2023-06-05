@@ -21,4 +21,4 @@ init_db()
 test_scc = SCC(5001)
 while True:
     test_scc.receiveStatus()
-    print(test_scc.estopEnabled())
+    print(test_scc.estopEnabled)
