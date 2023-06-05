@@ -16,11 +16,11 @@ class SCC:
     def __init__(self, port):
         self.port = port
         self.sock = createSccSockets(self.port)
-        self.estopEnabled = True
+        self.estopEnabled = 1  # 1 to enable
 
     def receiveStatus(self):
         data, addr = self.sock.recvfrom(1024)
         print("received message: %s" % data)
         if data == "0":
-            self.estopEnabled = '0'
+            self.estopEnabled = 0
 
