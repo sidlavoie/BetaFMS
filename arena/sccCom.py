@@ -19,7 +19,8 @@ class SCC:
         self.estopEnabled = True
 
     def receiveStatus(self):
-        while True:
-            data, addr = self.sock.recvfrom(1024)
-            print("received message: %s" % data)
+        data, addr = self.sock.recvfrom(1024)
+        print("received message: %s" % data)
+        if data == 0:
+            self.estopEnabled = False
 
