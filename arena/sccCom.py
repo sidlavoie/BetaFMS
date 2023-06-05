@@ -21,6 +21,6 @@ class SCC:
     def receiveStatus(self):
         data, addr = self.sock.recvfrom(1024)
         print("received message: %s" % data)
-        if data == 0:
+        if data == "0":
             self.estopEnabled = False
 
