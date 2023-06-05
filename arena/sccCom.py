@@ -7,8 +7,6 @@ def createSccSockets(fms_port):
     sockscc.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
     sockscc.bind((fms_ip, fms_port))
-
-
     return sockscc
 
 
@@ -23,4 +21,6 @@ class SCC:
         print("received message: %s" % data)
         if data.decode() == '0':
             self.estopEnabled = False
+        else:
+            self.estopEnabled = True
 
