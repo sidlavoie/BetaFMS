@@ -7,7 +7,7 @@ def createSccSockets(fms_port):
     sockscc.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
     sockscc.bind((fms_ip, fms_port))
-    print(sockscc.getsockname())
+
 
     return sockscc
 
@@ -23,6 +23,7 @@ class SCC:
         self.sock.listen()
 
         print(f'Listening for SCC packets on port {self.port}...')
+        print(self.sock.getsockname())
         while True:
             try:
                 # wait for a connection from the scc
