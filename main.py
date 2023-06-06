@@ -6,6 +6,7 @@ from arena.driverStation import *
 from arena.arena_main import *
 from arena.sccCom import *
 from schedule.scheduler import *
+from schedule.insert import *
 
 httpPort = 8080
 serverHostName = ''
@@ -27,9 +28,13 @@ test = getTeamsNumberList()
 print(test)
 colors = ["Rouge", "Bleu", "Violet", "Orange"]
 schedule = generate_schedule(test, colors)
-printSchedule(schedule)
-addMatch(6872, 296)
+print(schedule)
+schedule_inserter(schedule)
+matches = getQualMatchTable()
+print(matches)
+reset_net()
 loadNextMatch()
+
 
 #vert, jaune = loadNextMatch()
 #sleep(10)

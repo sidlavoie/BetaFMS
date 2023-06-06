@@ -17,7 +17,9 @@ def init_db():
     cursor.execute("CREATE TABLE IF NOT EXISTS qual_matches ("
                    "time DATETIME, "
                    "TEAM_VERT VARCHAR(5), "
-                   "TEAM_JAUNE VARCHAR(5))")
+                   "SUB_TEAM_VERT VARCHAR(8), "
+                   "TEAM_JAUNE VARCHAR(5), "
+                   "SUB_TEAM_JAUNE VARCHAR(8))")
     return 0
 
 
@@ -112,13 +114,20 @@ def getMatchInfo(match_number):
     return cursor.fetchall()[0]
 
 
-def addMatch(teamvert, teamjaune): # time à ajouter
+def addMatch(teamvert, subteamvert, teamjaune, subteamjaune): # time à ajouter
     connection = sqlite3.connect("main.db")
     cursor = connection.cursor()
-    params = (teamvert, teamjaune)
-    cursor.execute("INSERT INTO qual_matches (TEAM_VERT, TEAM_JAUNE) "
-                   "VALUES (?, ?)", params)
+    params = (teamvert, subteamvert, teamjaune, subteamjaune)
+    cursor.execute("INSERT INTO qual_matches (TEAM_VERT, SUB_TEAM_VERT, TEAM_JAUNE, SUB_TEAM_JAUNE) "
+                   "VALUES (?, ?, ?, ?)", params)
     connection.commit()
+
+
+def getQualMatchTable():
+    connection = sqlite3.connect("main.db")
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM qual_matches")
+    return cursor.fetchall()
 
 def deleteTeam(number):
     connection = sqlite3.connect("main.db")
