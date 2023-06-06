@@ -81,7 +81,6 @@ def get_teamInfo(number):
     return cursor.fetchall()[0]
 
 
-
 def get_teamWifi(number):
     connection = sqlite3.connect("main.db")
     cursor = connection.cursor()
@@ -94,6 +93,15 @@ def getTeamsTable():
     cursor = connection.cursor()
     cursor.execute("SELECT * FROM teams")
     return cursor.fetchall()
+
+
+# Returns a list of all the teams numbers
+def getTeamsNumberList():
+    connection = sqlite3.connect("main.db")
+    connection.row_factory = lambda cursor, row: row[0]
+    c = connection.cursor()
+    c.execute("SELECT team_number FROM teams")
+    return c.fetchall()
 
 
 def getMatchInfo(match_number):

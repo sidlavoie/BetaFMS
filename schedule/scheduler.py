@@ -86,9 +86,3 @@ def check_number_matches(schedule):
 
 teams = ["Team 1", "Team 2", "Team 3", "Team 4", "Team 5", "Team 6", "Team 7", "Team 8", "Team 9", "Team 10", "Team 11", "Team 12" ]
 colors = ["Rouge", "Bleu", "Violet", "Orange"]
-schedule = generate_schedule(teams, colors)
-printSchedule(schedule)
-
-
-result = check_number_matches(schedule)
-print(result)
