@@ -68,6 +68,7 @@ def printSchedule(schedule):
             print(f"Match {match_num}: {match[0]} vs {match[1]}")
         print()
 
+
 # Used for testing purposes, will need to be reimplemented
 def check_number_matches(schedule):
     my_dict = {}

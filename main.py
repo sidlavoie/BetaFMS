@@ -25,11 +25,21 @@ add_team("7700", "West Tech Paladins", "2019")
 add_team("8067", "Alpha Lab", "2022")
 add_team("9076", "Villaceraptors", "2023")
 test = getTeamsNumberList()
-print(test)
 colors = ["Rouge", "Bleu", "Violet", "Orange"]
 schedule = generate_schedule(test, colors)
 printSchedule(schedule)
-schedule_inserter(schedule)
+starttime = datetime(2023, 10, 15, 10, 30)
+ambreaktime = datetime(2023, 10, 15, 11, 2)
+lunchtime = datetime(2023, 10, 15, 12, 0)
+pmbreaktime = datetime(2023, 10, 15, 16, 0)
+cycletime = 10
+amduration = 10
+lunchduration = 60
+pmduration = 15
+(realambreak, reallunch, realpmbreak) = schedule_inserter(schedule, starttime, cycletime, ambreaktime, amduration, pmbreaktime, pmduration, lunchtime, lunchduration)
+
+qual_schedule_exporter()
+
 #reset_net()
 #loadNextMatch()
 
