@@ -10,6 +10,7 @@ def init_db():
     cursor.execute("CREATE TABLE IF NOT EXISTS teams ("
                    "team_number VARCHAR(5), "
                    "team_name VARCHAR(50), "
+                   "ranking_points INTEGER(3),"
                    "rookie_year VARCHAR(4), "
                    "ssid VARCHAR(8), "
                    "wpa_key VARCHAR(8))")
@@ -60,8 +61,8 @@ def add_team(number, name, rookie_year):
     cursor = connection.cursor()
 
     params = (number, name, rookie_year, creds[0], creds[1])
-    cursor.execute("INSERT INTO teams (team_number, team_name, rookie_year, ssid, wpa_key) "
-                   "VALUES (?, ?, ?, ?, ?)", params)
+    cursor.execute("INSERT INTO teams (team_number, team_name, ranking_points, rookie_year, ssid, wpa_key) "
+                   "VALUES (?, ?, 0, ?, ?, ?)", params)
     connection.commit()
     print("Inserted team %s with ssid %s and WPA key %s" % (name, creds[0], creds[1]))
 
@@ -114,12 +115,12 @@ def getMatchInfo(match_number):
     return cursor.fetchall()[0]
 
 
-def addMatch(teamvert, subteamvert, teamjaune, subteamjaune): # time à ajouter
+def addMatch(teamvert, subteamvert, teamjaune, subteamjaune, time):
     connection = sqlite3.connect("main.db")
     cursor = connection.cursor()
-    params = (teamvert, subteamvert, teamjaune, subteamjaune)
-    cursor.execute("INSERT INTO qual_matches (TEAM_VERT, SUB_TEAM_VERT, TEAM_JAUNE, SUB_TEAM_JAUNE) "
-                   "VALUES (?, ?, ?, ?)", params)
+    params = (teamvert, subteamvert, teamjaune, subteamjaune, time)
+    cursor.execute("INSERT INTO qual_matches (TEAM_VERT, SUB_TEAM_VERT, TEAM_JAUNE, SUB_TEAM_JAUNE, time) "
+                   "VALUES (?, ?, ?, ?, ?)", params)
     connection.commit()
 
 

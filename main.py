@@ -25,12 +25,13 @@ add_team("7700", "West Tech Paladins", "2019")
 add_team("8067", "Alpha Lab", "2022")
 add_team("9076", "Villaceraptors", "2023")
 test = getTeamsNumberList()
+print(test)
 colors = ["Rouge", "Bleu", "Violet", "Orange"]
 schedule = generate_schedule(test, colors)
 printSchedule(schedule)
 schedule_inserter(schedule)
-reset_net()
-loadNextMatch()
+#reset_net()
+#loadNextMatch()
 
 
 #vert, jaune = loadNextMatch()
