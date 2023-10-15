@@ -115,12 +115,12 @@ def getMatchInfo(match_number):
     return cursor.fetchall()[0]
 
 
-def addMatch(teamvert, subteamvert, teamjaune, subteamjaune): # time à ajouter
+def addMatch(teamvert, subteamvert, teamjaune, subteamjaune, time):
     connection = sqlite3.connect("main.db")
     cursor = connection.cursor()
-    params = (teamvert, subteamvert, teamjaune, subteamjaune)
-    cursor.execute("INSERT INTO qual_matches (TEAM_VERT, SUB_TEAM_VERT, TEAM_JAUNE, SUB_TEAM_JAUNE) "
-                   "VALUES (?, ?, ?, ?)", params)
+    params = (teamvert, subteamvert, teamjaune, subteamjaune, time)
+    cursor.execute("INSERT INTO qual_matches (TEAM_VERT, SUB_TEAM_VERT, TEAM_JAUNE, SUB_TEAM_JAUNE, time) "
+                   "VALUES (?, ?, ?, ?, ?)", params)
     connection.commit()
 
 
