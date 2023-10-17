@@ -12,7 +12,7 @@ import tools.logger
 httpPort = 6000
 serverHostName = 'localhost'
 
-tools.logger.setup_logging()
+#tools.logger.setup_logging()
 
 reset_db()
 init_db()
