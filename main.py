@@ -9,7 +9,7 @@ from schedule.scheduler import *
 from schedule.insert import *
 import tools.logger
 
-httpPort = 80
+httpPort = 8080
 serverHostName = 'localhost'
 
 #tools.logger.setup_logging()
