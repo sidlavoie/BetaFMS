@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>BetaFMS</title>
+</head>
+<body>
+    <h1>Bienvenue à BetaFMS!</h1>
+    <p>Cliquez sur le bouton pour générer un horaire:</p>
+    <form action="/generate_schedule" method="post" onsubmit="return confirmGenerateSchedule();">
+    <input type="submit" value="Générer l'horaire">
+    </form>
+
+<form action="/download_schedule" method="post">
+    <input type="submit" value="Télécharger l'horaire">
+</form>
+
+<script>
+        function confirmGenerateSchedule() {
+            return confirm("Voulez-vous vraiment générer l'horaire? Cela va réinitialiser la base de données.");
+        }
+    </script>
+</body>
+</html>

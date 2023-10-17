@@ -1,4 +1,4 @@
-from db_main import addMatch, getQualMatchTable
+from db_main import *
 from datetime import datetime, timedelta
 from reportlab.lib.pagesizes import letter
 from reportlab.lib import colors
@@ -11,6 +11,7 @@ def schedule_inserter(schedule: list, start_time: datetime, cycle_time: int,
                       lunch_time: datetime, lunch_duration: int):
     # Verify correct scheduling
     # This inserts matches into the schedule
+    reset_qual_matches()
     match_time = start_time
     real_am_break = None
     real_lunch_break = None
@@ -70,3 +71,4 @@ def qual_schedule_exporter():
     doc.build(story)
 
     print(f"PDF created: {export_file}")
+    return export_file

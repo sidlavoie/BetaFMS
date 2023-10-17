@@ -31,6 +31,18 @@ def reset_db():
     cursor.execute("DROP TABLE IF EXISTS teams")
     cursor.execute("DROP TABLE IF EXISTS qual_matches")
 
+def reset_qual_matches():
+    connection = sqlite3.connect("main.db")
+    cursor = connection.cursor()
+    cursor.execute("DROP TABLE IF EXISTS qual_matches")
+    cursor.execute("CREATE TABLE IF NOT EXISTS qual_matches ("
+                   "time DATETIME, "
+                   "TEAM_VERT VARCHAR(5), "
+                   "SUB_TEAM_VERT VARCHAR(8), "
+                   "TEAM_JAUNE VARCHAR(5), "
+                   "SUB_TEAM_JAUNE VARCHAR(8))")
+    print("Table qual_matches was dropped per user-request!")
+    return 0
 
 def generate_ssid():
     randomSource = string.ascii_lowercase + string.digits
