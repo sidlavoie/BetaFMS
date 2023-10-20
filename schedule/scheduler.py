@@ -4,6 +4,7 @@ import random
 def generate_schedule(teams, colors):
     if len(teams) > 12:
         raise ValueError("There must be no more than 12 teams")
+
     random.shuffle(teams)
 
     if len(teams) % 2 != 0:
@@ -57,7 +58,6 @@ def generate_schedule(teams, colors):
 
         # Rotate the teams for the next round
         teams.insert(1, teams.pop())
-
     return schedule
 
 
@@ -82,8 +82,4 @@ def check_number_matches(schedule):
                     my_dict[key] += 1
     return my_dict
 
-# Call the function with your schedule
 
-
-teams = ["Team 1", "Team 2", "Team 3", "Team 4", "Team 5", "Team 6", "Team 7", "Team 8", "Team 9", "Team 10", "Team 11", "Team 12" ]
-colors = ["Rouge", "Bleu", "Violet", "Orange"]

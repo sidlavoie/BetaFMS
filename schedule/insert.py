@@ -3,21 +3,27 @@ from datetime import datetime, timedelta
 from reportlab.lib.pagesizes import letter
 from reportlab.lib import colors
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle
+from schedule.scheduler import *
+
+teamColors = ["Rouge", "Bleu", "Violet", "Orange"]
 
 
-def schedule_inserter(schedule: list, start_time: datetime, cycle_time: int,
+# This function is really important. It calls the scheduler and inserts the matches into the database with a timestamp
+def schedule_inserter(start_time: datetime, cycle_time: int,
                       am_break_time: datetime, am_break_duration: int,
                       pm_break_time: datetime, pm_break_duration: int,
                       lunch_time: datetime, lunch_duration: int):
-    # Verify correct scheduling
-    # This inserts matches into the schedule
+    # Reset previous schedule
     reset_qual_matches()
+    # Create a schedule
+    schedule = generate_schedule(getTeamsNumberList(), teamColors)
     match_time = start_time
     real_am_break = None
     real_lunch_break = None
     real_pm_break = None
+    #Insert into matches
     for i in range(len(schedule)):
-        for j in range(2):
+        for j in range(len(schedule[i])):
             vert = schedule[i][j][0].split(" ")
             jaune = schedule[i][j][1].split(" ")
 

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BetaFMS: Ajouter une équipe</title>
+    <script src="scripts/errorHandling.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+</head>
+<body>
+    <h2>Ajouter une équipe</h2>
+    Entrez les informations de l'équipe
+<form action="/teamadd" method="post">
+    <label for="numEqui">Numéro d'équipe:</label><br>
+    <input type="text" id="numEqui" name="numEqui"><br>
+    <label for="nomEq">Nom d'équipe:</label><br>
+    <input type="text" id="nomEq" name="nomEq"><br>
+    <label for="rookie">Année recrue:</label><br>
+    <input type="text" id="rookie" name="rookie"><br>
+    <input type="submit" value="+">
+</form>
+ <script>
+       function openPopup(message) {
+    var popup = document.getElementById("customPopup");
+    var popupMessage = document.getElementById("popupMessage");
+    popupMessage.innerHTML = message;
+    popup.style.display = "block";
+}
+
+function closePopup() {
+    var popup = document.getElementById("customPopup");
+    popup.style.display = "none";
+}
+    </script>
+
+<div id="customPopup" class="popup">
+    <div class="popup-content">
+        <span class="close" onclick="closePopup()">&times;</span>
+        <p id="popupMessage"></p>
+    </div>
+</div>
+<span class="close" onclick="closePopup()">&times;</span>
+</body>
+</html>
