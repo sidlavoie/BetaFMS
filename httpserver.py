@@ -20,11 +20,19 @@ class MyServer(BaseHTTPRequestHandler):
 
             self.wfile.write(bytes(html_content, "utf-8"))
 
-        elif self.path =='/add_team':
+        elif self.path =='/add_team?' or self.path == "/add_team":
             with open('www/add_team.html', 'r',encoding='utf-8') as html_file:
                 html_content = html_file.read()
 
             self.wfile.write(bytes(html_content, "utf-8"))
+            self.end_headers()
+
+        elif self.path == '/scheduleControl' or self.path =='/scheduleControl?':
+            with open('www/scheduleControl.html', 'r', encoding='utf-8') as html_file:
+                html_content = html_file.read()
+
+            self.wfile.write(bytes(html_content, "utf-8"))
+            self.end_headers()
 
         else:
             self.send_response(404)
@@ -37,6 +45,12 @@ class MyServer(BaseHTTPRequestHandler):
     def do_POST(self):
         try:
             if self.path == '/generate_schedule':
+
+                form = cgi.FieldStorage(
+                    fp=self.rfile,
+                    headers=self.headers,
+                    environ={'REQUEST_METHOD': 'POST', 'CONTENT_TYPE': self.headers['Content-Type'], }
+                )
                 starttime = datetime(2023, 10, 15, 10, 30)
                 ambreaktime = datetime(2023, 10, 15, 11, 2)
                 lunchtime = datetime(2023, 10, 15, 12, 0)

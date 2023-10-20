@@ -39,7 +39,7 @@ def schedule_inserter(start_time: datetime, cycle_time: int,
                 match_time += timedelta(minutes=lunch_duration)
 
             elif match_time > am_break_time and match_time > lunch_time and match_time >= pm_break_time and real_pm_break is None:
-                real_lunch_break = match_time
+                real_pm_break = match_time
                 match_time += timedelta(minutes=pm_break_duration)
 
             else:

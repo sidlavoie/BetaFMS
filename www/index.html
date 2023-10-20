@@ -6,8 +6,8 @@
 </head>
 <body>
     <h1>Bienvenue à BetaFMS!</h1>
-    <p>Cliquez sur le bouton pour générer un horaire:</p>
-    <form action="/generate_schedule" method="post" onsubmit="return confirmGenerateSchedule();">
+    <p>Que voulez-vous faire?</p>
+    <form action="/scheduleControl" method="get" >
     <input type="submit" value="Générer l'horaire">
     </form>
 
@@ -15,11 +15,8 @@
     <input type="submit" value="Télécharger l'horaire">
 </form>
 
-<script>
-        function confirmGenerateSchedule() {
-            return confirm("Voulez-vous vraiment générer l'horaire? Cela va réinitialiser la base de données.");
-        }
-    </script>
-    <a href="/add_team">Cliquez ici pour ajouter une équipe.</a>
+<form action="/add_team" method="get">
+    <input type="submit" value="Voir les équipes">
+</form>
 </body>
 </html>

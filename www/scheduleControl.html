@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BetaFMS: Générateur d'horaire</title>
+</head>
+<body>
+<form action="/generate_schedule" method="post" onsubmit="return confirmGenerateSchedule();">
+    <label for="numEqui">Numéro d'équipe:</label><br>
+    <input type="text" id="numEqui" name="numEqui"><br>
+    <label for="nomEq">Nom d'équipe:</label><br>
+    <input type="text" id="nomEq" name="nomEq"><br>
+    <label for="rookie">Année recrue:</label><br>
+    <input type="text" id="rookie" name="rookie"><br>
+    <input type="submit" value="+">
+</form>
+ <script>
+<script>
+        function confirmGenerateSchedule() {
+            return confirm("Voulez-vous vraiment générer l'horaire? Cela va réinitialiser la base de données.");
+        }
+    </script>
+</body>
+</html>
