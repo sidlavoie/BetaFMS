@@ -7,7 +7,7 @@ from schedule.insert import *
 from schedule.scheduler import *
 from db_main import getTeamsNumberList
 
-# NE FONCTIONNE PAS ENCORE!!!!!!!
+
 class MyServer(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)
@@ -51,7 +51,9 @@ class MyServer(BaseHTTPRequestHandler):
                     headers=self.headers,
                     environ={'REQUEST_METHOD': 'POST', 'CONTENT_TYPE': self.headers['Content-Type'], }
                 )
-                starttime = datetime(2023, 10, 15, 10, 30)
+               
+                starttime = form['startTime'].value
+
                 ambreaktime = datetime(2023, 10, 15, 11, 2)
                 lunchtime = datetime(2023, 10, 15, 12, 0)
                 pmbreaktime = datetime(2023, 10, 15, 16, 0)
