@@ -1,5 +1,7 @@
 Arena = classe. --> objet créé à chaque match
 
+IMPORTANT: regarder la fonction de génération d'horaire... elle ne semble pas dropper la table correctement/horaire incomplet
+
 Pyhton multiprocessing
   créer fonction
   créer processus (process=Process(target=fonction))
@@ -34,3 +36,6 @@ Pyhton multiprocessing
 
 Créer encodage packet dans class DriverStation
 Créer envoi packet dans class DriverStation
+
+Il est possible de juste spécifier le nom de l'image tant qu'elle est dans www/static/images
+Il est impératif que l'image soit dans www/static/images

@@ -20,14 +20,24 @@ class MyServer(BaseHTTPRequestHandler):
 
             self.wfile.write(bytes(html_content, "utf-8"))
 
-        elif self.path =='/add_team?' or self.path == "/add_team":
-            with open('www/add_team.html', 'r',encoding='utf-8') as html_file:
+        elif self.path == '/favicon.ico':
+            with open('www/static/images/favicon.ico', 'rb') as favicon_file:
+                favicon_content = favicon_file.read()
+
+            self.send_response(200)
+            self.send_header("Content-type", "image/x-icon")
+            self.send_header("Content-Length", str(len(favicon_content)))
+            self.wfile.write(favicon_content)
+            self.end_headers()
+
+        elif self.path == '/add_team?':
+            with open('www/add_team.html', 'r', encoding='utf-8') as html_file:
                 html_content = html_file.read()
 
             self.wfile.write(bytes(html_content, "utf-8"))
             self.end_headers()
 
-        elif self.path == '/scheduleControl' or self.path =='/scheduleControl?':
+        elif self.path == '/scheduleControl?':
             with open('www/scheduleControl.html', 'r', encoding='utf-8') as html_file:
                 html_content = html_file.read()
 
@@ -35,12 +45,58 @@ class MyServer(BaseHTTPRequestHandler):
             self.end_headers()
 
         else:
-            self.send_response(404)
-            with open('www/404.html', 'r',encoding='utf-8') as html_file:
-                html_content = html_file.read()
+            try:
+                if self.path.find(".jpeg") != -1:  # Handle pictures
+                    if self.path[0] == '/':
+                        self.path = self.path[1:]
+                    if self.path.find("www/static/images/") == -1:
+                        self.path = "www/static/images/" + self.path
 
-            self.wfile.write(bytes(html_content, "utf-8"))
-            self.end_headers()
+                    with open(self.path, 'rb') as image_file:
+                        image_content = image_file.read()
+
+                    self.send_response(200)
+                    self.send_header("Content-type", "image/x-icon")
+                    self.send_header("Content-Length", str(len(image_content)))
+                    self.wfile.write(image_content)
+                    self.end_headers()
+
+                if self.path.find(".wav") != -1:  # Handle audio
+                    if self.path[0] == '/':
+                        self.path = self.path[1:]
+                    if self.path.find("www/static/audio/") == -1:
+                        self.path = "www/static/audio/" + self.path
+
+                    with open(self.path, 'rb') as audio_file:
+                        audio_content = audio_file.read()
+
+                    self.send_response(200)
+                    self.send_header("Content-type", "audio/wav")
+                    self.send_header("Content-Length", str(len(audio_content)))
+                    self.wfile.write(audio_content)
+                    self.end_headers()
+
+                else:
+                    # Append www and .html if it does not exist
+                    if self.path.find('www',1) == -1:
+                        self.path = "www" + self.path
+                    if self.path.find(".html") == -1:
+                        self.path = self.path + ".html"
+
+                    with open(self.path, 'r', encoding='utf-8')as html_file:  # just return the name of the file
+                        html_content = html_file.read()
+
+                    self.wfile.write(bytes(html_content, "utf-8"))
+                    self.end_headers()
+
+            except FileNotFoundError:  # 404 if it does not exist
+                print("404")
+                self.send_response(404)
+                with open('www/404.html', 'r', encoding='utf-8') as html_file:
+                    html_content = html_file.read()
+
+                self.wfile.write(bytes(html_content, "utf-8"))
+                self.end_headers()
 
     def do_POST(self):
         try:
