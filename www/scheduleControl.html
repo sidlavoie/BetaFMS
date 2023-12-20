@@ -6,14 +6,15 @@
 </head>
 <body>
 <form action="/generate_schedule" method="post" onsubmit="return confirmGenerateSchedule();">
-    <label for="startTime">Heure de début:</label><br>
-    <input type="datetime" id="startTime" name="startTime" value="2023-09-16"><br>
-    <label for="amBreakTime">Heure de pause AM:</label><br>
-    <input type="text" id="amBreakTime" name="amBreakTime"><br>
-    <label for="amBreakDuration">Durée pause AM</label><br>
-    <input type="text" id="amBreakDuration" name="amBreakDuration"><br>
+    <label for="numEqui">Numéro d'équipe:</label><br>
+    <input type="text" id="numEqui" name="numEqui"><br>
+    <label for="nomEq">Nom d'équipe:</label><br>
+    <input type="text" id="nomEq" name="nomEq"><br>
+    <label for="rookie">Année recrue:</label><br>
+    <input type="text" id="rookie" name="rookie"><br>
     <input type="submit" value="+">
 </form>
+ <script>
 <script>
         function confirmGenerateSchedule() {
             return confirm("Voulez-vous vraiment générer l'horaire? Cela va réinitialiser la base de données.");

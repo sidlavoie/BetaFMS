@@ -18,7 +18,7 @@ Le projet s'exécute sur Linux dans un conteneur Docker. Le script de création 
 aléatoirement au début de la compétition. Une base de données SQLite permet de contabiliser le déroulement de l'évènement. Un serveur Web sera créé pour contrôler l'évènement, comme celui utilisé en FTC.
 
 ### Avancement
-Le projet est en cours de démarrage. Plus de détails seront disponibles sous peu.
+Le projet est en cours de démarrage. PLus de détails seront disponibles sous peu.
 
 
 ## An attempt to make a functionnal FMS for Robotique FIRST Quebec's Betabots
