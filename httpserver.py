@@ -158,7 +158,8 @@ class MyServer(BaseHTTPRequestHandler):
                     self.wfile.write(pdf.read())
 
             elif self.path == '/loadnextmatch':
-                loadNextMatch()
+                vert, jaune = loadNextMatch()
+                end_match(vert, jaune)
 
                 self.send_response(200)
                 self.end_headers()
