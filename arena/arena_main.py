@@ -12,6 +12,10 @@ def loadNextMatch():
     CURRENT_MATCH += 1
     match = getMatchInfo(CURRENT_MATCH)
     print(match)
+    if "Dîner" in match or "Pause" in match:
+        CURRENT_MATCH += 1
+        match = getMatchInfo(CURRENT_MATCH)
+
     # Initialize Network
     init_net(match[0], match[1])
     # Create DriverStation objects

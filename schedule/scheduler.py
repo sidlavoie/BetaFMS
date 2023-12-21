@@ -1,7 +1,7 @@
 import random
 
-
-def generate_schedule(teams, colors):
+def generate_schedule(teams, subteam_colors):
+    colors = subteam_colors
     if len(teams) > 12:
         raise ValueError("There must be no more than 12 teams")
 
@@ -10,12 +10,11 @@ def generate_schedule(teams, colors):
     if len(teams) % 2 != 0:
         teams.append('surrogate')
 
-
     # if there is more than 9 teams, there will need to be a fifth round so red will replay
     # For 11 or 12 teams, a sixth round is added
-    if len(teams) > 9:
+    if 9 < len(teams) < 11 and len(colors) < 5:
         colors.append(colors[0])
-    if len(teams) > 11:
+    if len(teams) > 11 and len(colors) < 6:
         colors.append(colors[1])
 
     # Generate a round-robin schedule
@@ -33,7 +32,6 @@ def generate_schedule(teams, colors):
             else:
                 match = [teams[num_teams - 1 - i] + ' ' + colors[_], teams[i] + ' ' + colors[_]]
             round_schedule.append(match)
-
 
         # Assigns surrogate team, if any
         for ma in range(len(round_schedule)):
@@ -58,6 +56,7 @@ def generate_schedule(teams, colors):
 
         # Rotate the teams for the next round
         teams.insert(1, teams.pop())
+    print(schedule)
     return schedule
 
 

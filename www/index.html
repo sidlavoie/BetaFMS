@@ -18,7 +18,10 @@
 <form action="/add_team" method="get">
     <input type="submit" value="Voir les équipes">
 </form>
-    <button id="play">Play Audio</button>
+    <button id="play">Play Audio</button><br>
+    <form action="/loadnextmatch" method="post">
+    <input type="submit" value="loadNextMatch">
+</form>
 <script>
         let play = document.getElementById("play");
         function playMusic() {
@@ -26,6 +29,7 @@
             audio.play();
         }
         play.addEventListener("click", playMusic);
+
     </script>
 </body>
 </html>

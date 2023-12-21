@@ -6,12 +6,24 @@
 </head>
 <body>
 <form action="/generate_schedule" method="post" onsubmit="return confirmGenerateSchedule();">
-    <label for="numEqui">Numéro d'équipe:</label><br>
-    <input type="text" id="numEqui" name="numEqui"><br>
-    <label for="nomEq">Nom d'équipe:</label><br>
-    <input type="text" id="nomEq" name="nomEq"><br>
-    <label for="rookie">Année recrue:</label><br>
-    <input type="text" id="rookie" name="rookie"><br>
+    <label for="day">Date:</label>
+        <input type="date" id="day" name="day" value="{{ day }}" placeholder="Default: {{ day }}"><br>
+    <label for="starttime">Heure de début:</label>
+        <input type="time" id="starttime" name="starttime" value="{{ starttime }}" placeholder="Default: {{ starttime }}"><br>
+    <label for="ambreaktime">Heure de la pause d'avant-midi:</label>
+        <input type="time" id="ambreaktime" name="ambreaktime" value="{{ ambreaktime }}" placeholder="Default: {{ ambreaktime }}"><br>
+    <label for="lunchtime">Heure de la pause du midi:</label>
+        <input type="time" id="lunchtime" name="lunchtime" value="{{ lunchtime }}" placeholder="Default: {{ lunchtime }}"><br>
+    <label for="pmbreaktime">Heure de la pause d'après midi:</label>
+        <input type="time" id="pmbreaktime" name="pmbreaktime" value="{{ pmbreaktime }}" placeholder="Default: {{ pmbreaktime }}"><br>
+    <label for="cycletime">Durée du cycle (match et réinitialisation en minutes):</label>
+        <input type="text" id="cycletime" name="cycletime" value="{{ cycletime }}" placeholder="Default: {{ cycletime }}"><br>
+    <label for="amduration">Durée de la pause d'avant-midi (minutes):</label>
+        <input type="text" id="amduration" name="amduration" value="{{ amduration }}" placeholder="Default: {{ amduration }}"><br>
+    <label for="lunchduration">Durée de la pause du midi (minutes):</label>
+        <input type="text" id="lunchduration" name="lunchduration" value="{{ lunchduration }}" placeholder="Default: {{ lunchduration }}"><br>
+    <label for="pmduration">Durée de la pause d'après midi (minutes):</label>
+        <input type="text" id="pmduration" name="pmduration" value="{{ pmduration }}" placeholder="Default: {{ pmduration }}"><br>
     <input type="submit" value="+">
 </form>
  <script>

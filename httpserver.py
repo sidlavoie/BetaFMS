@@ -3,11 +3,15 @@ import cgi
 import json
 from http.server import *
 import time
+from jinja2 import Environment, FileSystemLoader
+
+# Custom modules
+from arena.arena_main import *
 from schedule.insert import *
 from schedule.scheduler import *
 from db_main import getTeamsNumberList
 
-# NE FONCTIONNE PAS ENCORE!!!!!!!
+env = Environment(loader=FileSystemLoader('.'))
 class MyServer(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)
@@ -38,10 +42,23 @@ class MyServer(BaseHTTPRequestHandler):
             self.end_headers()
 
         elif self.path == '/scheduleControl?':
-            with open('www/scheduleControl.html', 'r', encoding='utf-8') as html_file:
-                html_content = html_file.read()
+            template = env.get_template("www/scheduleControl.html")
 
-            self.wfile.write(bytes(html_content, "utf-8"))
+            rendered_template = template.render(
+                day=f"{schedule_conf.day.year}-{schedule_conf.day.month}-{schedule_conf.day.day}",
+                starttime=schedule_conf.starttime.strftime('%H:%M'),
+                ambreaktime=schedule_conf.ambreaktime.strftime('%H:%M'),
+                lunchtime=schedule_conf.lunchtime.strftime('%H:%M'),
+                pmbreaktime=schedule_conf.pmbreaktime.strftime('%H:%M'),
+                cycletime=schedule_conf.cycletime,
+                amduration=schedule_conf.amduration,
+                lunchduration=schedule_conf.lunchduration,
+                pmduration=schedule_conf.pmduration
+            )
+
+            self.send_response(200)
+            self.send_header('Content-type', 'text/html')
+            self.wfile.write(rendered_template.encode('utf-8'))
             self.end_headers()
 
         else:
@@ -107,17 +124,24 @@ class MyServer(BaseHTTPRequestHandler):
                     headers=self.headers,
                     environ={'REQUEST_METHOD': 'POST', 'CONTENT_TYPE': self.headers['Content-Type'], }
                 )
-                starttime = datetime(2023, 10, 15, 10, 30)
-                ambreaktime = datetime(2023, 10, 15, 11, 2)
-                lunchtime = datetime(2023, 10, 15, 12, 0)
-                pmbreaktime = datetime(2023, 10, 15, 16, 0)
-                cycletime = 10
-                amduration = 10
-                lunchduration = 60
-                pmduration = 15
-                (realambreak, reallunch, realpmbreak) = schedule_inserter( starttime, cycletime, ambreaktime,
-                                                                          amduration, pmbreaktime, pmduration, lunchtime,
-                                                                          lunchduration)
+
+                # Retrieve form values
+                #day_str = form.getvalue('day')
+                starttime_str = form.getvalue('starttime')
+                ambreaktime_str = form.getvalue('ambreaktime')
+                lunchtime_str = form.getvalue('lunchtime')
+                pmbreaktime_str = form.getvalue('pmbreaktime')
+
+                # Convert string values to datetime objects
+                #schedule_conf.day = datetime.strptime(day_str, '%Y:%m:%d')
+                schedule_conf.starttime = datetime.strptime(starttime_str, '%H:%M')
+                schedule_conf.ambreaktime = datetime.strptime(ambreaktime_str, '%H:%M')
+                schedule_conf.lunchtime = datetime.strptime(lunchtime_str, '%H:%M')
+                schedule_conf.pmbreaktime = datetime.strptime(pmbreaktime_str, '%H:%M')
+
+                (realambreak, reallunch, realpmbreak) = schedule_inserter(schedule_conf.starttime, schedule_conf.cycletime, schedule_conf.ambreaktime,
+                                                                          schedule_conf.amduration, schedule_conf.pmbreaktime, schedule_conf.pmduration, schedule_conf.lunchtime,
+                                                                          schedule_conf.lunchduration)
                 self.send_response(302)
                 self.send_header("Location", "/")
                 self.end_headers()
@@ -132,6 +156,12 @@ class MyServer(BaseHTTPRequestHandler):
 
                 with open(pdf_file, 'rb') as pdf:
                     self.wfile.write(pdf.read())
+
+            elif self.path == '/loadnextmatch':
+                loadNextMatch()
+
+                self.send_response(200)
+                self.end_headers()
 
             elif self.path == '/teamadd':
                 form = cgi.FieldStorage(
