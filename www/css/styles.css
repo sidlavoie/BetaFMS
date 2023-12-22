@@ -24,3 +24,15 @@
     padding: 10px;
     cursor: pointer;
 }
+
+#bottomLeftButton {
+    position: fixed;
+    bottom: 10px; /* Adjust the distance from the bottom as needed */
+    left: 10px;   /* Adjust the distance from the left as needed */
+    background-color: #1167d0;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

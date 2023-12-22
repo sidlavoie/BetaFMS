@@ -16,7 +16,6 @@ def generate_schedule(teams, subteam_colors):
         colors.append(colors[0])
     if len(teams) > 11 and len(colors) < 6:
         colors.append(colors[1])
-
     # Generate a round-robin schedule
     num_teams = len(teams)
     schedule = []
@@ -56,7 +55,6 @@ def generate_schedule(teams, subteam_colors):
 
         # Rotate the teams for the next round
         teams.insert(1, teams.pop())
-    print(schedule)
     return schedule
 
 

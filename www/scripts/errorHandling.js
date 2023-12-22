@@ -4,21 +4,23 @@ function handleErrorResponse(response) {
       // Handle successful response here
   } else {
     response.json().then(data => {
-      openPopup('Error: ' + data.error);
+      // Check if the error property exists in the JSON
+      if (data && data.error) {
+        // Generate HTML content for the error message and return button
+        var errorPageHTML = '<div id="errorPage" style="text-align: center; padding: 20px;">';
+        errorPageHTML += '<h2 style="color: #cc0000;">Error</h2>';
+        errorPageHTML += '<p>' + data.error + '</p>';
+        errorPageHTML += '<button onclick="redirectToHome()">Return</button>';
+        errorPageHTML += '</div>';
+
+        // Replace the entire body content with the error page HTML
+        document.body.innerHTML = errorPageHTML;
+      }
     });
   }
 }
-  
-  // Function to open the custom popup
-function openPopup(message) {
-    var popup = document.getElementById("customPopup");
-    var popupMessage = document.getElementById("popupMessage");
-    popupMessage.innerHTML = message;
-    popup.style.display = "block";
-}
 
-  // Function to close the custom popup
-function closePopup() {
-    // Your code to close the popup
+// Function to redirect to the home page
+function redirectToHome() {
+  window.location.href = '/';
 }
-

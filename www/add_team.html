@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <title>BetaFMS: Ajouter une équipe</title>
     <script src="scripts/errorHandling.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="stylesheet" type="text/css" href="www/css/styles.css">
 </head>
 <body>
+   
     <h2>Ajouter une équipe</h2>
     Entrez les informations de l'équipe
 <form action="/teamadd" method="post">
@@ -18,26 +19,36 @@
     <input type="text" id="rookie" name="rookie"><br>
     <input type="submit" value="+">
 </form>
- <script>
-       function openPopup(message) {
-    var popup = document.getElementById("customPopup");
-    var popupMessage = document.getElementById("popupMessage");
-    popupMessage.innerHTML = message;
-    popup.style.display = "block";
-}
 
-function closePopup() {
-    var popup = document.getElementById("customPopup");
-    popup.style.display = "none";
-}
-    </script>
-
-<div id="customPopup" class="popup">
-    <div class="popup-content">
-        <span class="close" onclick="closePopup()">&times;</span>
-        <p id="popupMessage"></p>
-    </div>
-</div>
-<span class="close" onclick="closePopup()">&times;</span>
+<h2>Retirer une équipe</h2>
+<form action="/removeteam" method="post">
+    <label for="numEqui"> Numéro d'équipe:</label><br>
+    <input type="text" id="delteam" name="delteam">
+    <input id="bottomLeftButton" type="submit" value="Supprimer">
+</form>
+<table>
+    <tr>
+        <th>Numéro d'équipe</th>
+        <th>Nom d'équipe</th>
+        <th>Points de classement</th>
+        <th>Année recrue</th>
+        <th>SSID</th>
+        <th>Clé WPA</th>
+    </tr>
+    <!-- Iterate over teams and populate the table -->
+    {% for team in teams %}
+    <tr>
+        <td>{{ team[0] }}</td>
+        <td>{{ team[1] }}</td>
+        <td>{{ team[2] }}</td>
+        <td>{{ team[3] }}</td>
+        <td>{{ team[4] }}</td>
+        <td>{{ team[5] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+<form action="/" method="get">
+    <input type="submit" value="Retour">
+</form>
 </body>
 </html>

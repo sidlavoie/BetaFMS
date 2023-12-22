@@ -145,5 +145,5 @@ def getQualMatchTable():
 def deleteTeam(number):
     connection = sqlite3.connect("main.db")
     cursor = connection.cursor()
-    cursor.execute("DELETE FROM teams WHERE team_number = ?", number)
+    cursor.execute("DELETE FROM teams WHERE team_number = ?", (number,))
     connection.commit()
