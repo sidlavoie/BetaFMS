@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+    <link rel="stylesheet" type="text/css" href="www/css/styles.css">
+</head>
+<body>
+    <div id="errorPage" style="text-align: center; padding: 20px;">
+        <h2 style="color: #cc0000;">Error</h2>
+        <p id="errorMessage"></p>
+        <button onclick="redirectToHome()">Return</button>
+    </div>
+
+    <script>
+     // Function to handle the response from the server
+function handleErrorResponse(response) {
+    if (!response.ok) {
+        response.json().then(data => {
+            // Check if the error property exists in the JSON
+            if (data && data.error) {
+                // Display the error directly in the existing error container
+                var errorParagraph = document.getElementById('errorMessage');
+                if (errorParagraph) {
+                    errorParagraph.textContent = data.error;
+                }
+            }
+        });
+    }
+}
+
+// Function to redirect to the home page
+function redirectToHome() {
+    window.location.href = '/';
+}
+    </script>
+</body>
+</html>

@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>BetaFMS: Ajouter une équipe</title>
-    <script src="scripts/errorHandling.js"></script>
     <link rel="stylesheet" type="text/css" href="www/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto">
 </head>
 <body>
    
@@ -24,9 +24,10 @@
 <form action="/removeteam" method="post">
     <label for="numEqui"> Numéro d'équipe:</label><br>
     <input type="text" id="delteam" name="delteam">
-    <input id="bottomLeftButton" type="submit" value="Supprimer">
+    <input type="submit" value="Supprimer">
 </form>
-<table>
+
+<table id="teamTable">
     <tr>
         <th>Numéro d'équipe</th>
         <th>Nom d'équipe</th>
@@ -47,8 +48,38 @@
     </tr>
     {% endfor %}
 </table>
-<form action="/" method="get">
-    <input type="submit" value="Retour">
+    <input type="checkbox" id="toggleColumns" onclick="toggleColumns()">
+    <label for="toggleColumns" class="toggle-label">Montrer SSID et PSK</label>
+<h2>Regénérer clé WPA</h2>
+<form action="/wparegen" method="post">
+    <label for="numEqui"> Numéro d'équipe:</label><br>
+    <input type="text" id="wpateam" name="wpateam">
+    <input type="submit" value="Regénérer">
 </form>
+<form action="/" method="get">
+    <input id="bottomLeftButton" type="submit" value="Retour">
+</form>
+<script>
+        function toggleColumns() {
+            var table = document.getElementById('teamTable');
+            var checkbox = document.getElementById('toggleColumns');
+
+            // Get the column index (0-based) of the last two columns
+            var colIndex1 = table.rows[0].cells.length - 2;
+            var colIndex2 = table.rows[0].cells.length - 1;
+
+            // Toggle visibility based on checkbox state
+            table.rows[0].cells[colIndex1].style.display = checkbox.checked ? '' : 'none';
+            table.rows[0].cells[colIndex2].style.display = checkbox.checked ? '' : 'none';
+
+            // Iterate through rows and toggle visibility of corresponding cells
+            for (var i = 1; i < table.rows.length; i++) {
+                table.rows[i].cells[colIndex1].style.display = checkbox.checked ? '' : 'none';
+                table.rows[i].cells[colIndex2].style.display = checkbox.checked ? '' : 'none';
+            }
+        }
+
+    toggleColumns();
+    </script>
 </body>
 </html>

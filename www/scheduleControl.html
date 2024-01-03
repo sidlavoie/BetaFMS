@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>BetaFMS: Générateur d'horaire</title>
+    <link rel="stylesheet" type="text/css" href="www/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto">
 </head>
 <body>
 <form action="/generate_schedule" method="post" onsubmit="return confirmGenerateSchedule();">
@@ -27,7 +29,7 @@
     <input type="submit" value="+">
 </form>
 <form action="/" method="get">
-    <input type="submit" value="Retour">
+    <input id="bottomLeftButton" type="submit" value="Retour">
 </form>
  <script>
         function confirmGenerateSchedule() {

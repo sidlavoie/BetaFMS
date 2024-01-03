@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>BetaFMS</title>
-    <link rel="stylesheet href=css/styles.css"
+    <link rel="stylesheet" type="text/css" href="www/css/styles.css">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto">
 </head>
 <body>
     <h1>Bienvenue à BetaFMS!</h1>
@@ -19,8 +20,8 @@
 <form action="/add_team" method="get">
     <input type="submit" value="Voir les équipes">
 </form>
-    <button id="play">Play Audio</button><br>
-    <form action="/loadnextmatch" method="post">
+    <button id="play">Play Audio</button><button id="foghorn">Foghorn</button><br>
+<form action="/loadnextmatch" method="post">
     <input type="submit" value="loadNextMatch">
 </form>
 <script>
@@ -30,6 +31,13 @@
             audio.play();
         }
         play.addEventListener("click", playMusic);
+
+        let foghorn = document.getElementById("foghorn");
+        function playFoghorn(){
+            let audio = new Audio("abort_match.wav");
+            audio.play();
+        }
+        foghorn.addEventListener("click", playFoghorn);
 
     </script>
 </body>
