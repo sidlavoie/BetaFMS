@@ -16,6 +16,7 @@ def init_db():
                    "wpa_key VARCHAR(8))")
 
     cursor.execute("CREATE TABLE IF NOT EXISTS qual_matches ("
+                   "id INTEGER PRIMARY KEY,"
                    "time DATETIME, "
                    "TEAM_VERT VARCHAR(5), "
                    "SUB_TEAM_VERT VARCHAR(8), "
@@ -36,6 +37,7 @@ def reset_qual_matches():
     cursor = connection.cursor()
     cursor.execute("DROP TABLE IF EXISTS qual_matches")
     cursor.execute("CREATE TABLE IF NOT EXISTS qual_matches ("
+                   "id INTEGER PRIMARY KEY,"
                    "time DATETIME, "
                    "TEAM_VERT VARCHAR(5), "
                    "SUB_TEAM_VERT VARCHAR(8), "

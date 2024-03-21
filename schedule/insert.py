@@ -61,15 +61,22 @@ def qual_schedule_exporter():
     schedule = getQualMatchTable()
     for i in range(len(schedule)):
         schedule[i] = list(schedule[i])
-        schedule[i][0] = schedule[i][0].split(" ")[1]
+        schedule[i][1] = schedule[i][1].split(" ")[1]
+    
+    print(schedule)
 
     # Specify hex color values
     green_hex = '#16E00F'
     yellow_hex = '#E0E200'
 
     # Create the columns names
-    columns = ["Heure", "Vert", "Sous-équipe vert", "Jaune", "Sous-équipe jaune"]
+    columns = ["Match", "Heure", "Vert", "Sous-équipe vert", "Jaune", "Sous-équipe jaune"]
+
+    # Add column names as the first element of the schedule list
     schedule.insert(0, columns)
+
+    # Convert schedule to a list of lists
+    schedule_data = [list(row) for row in schedule]
 
     # Title
     title_style = getSampleStyleSheet()["Title"]
@@ -79,24 +86,29 @@ def qual_schedule_exporter():
     # Create a document
     export_file = "BetaHoraire.pdf"
     doc = SimpleDocTemplate(export_file, pagesize=letter)
-    table = Table(schedule)
+    table = Table(schedule_data)
 
     # Define column ranges for different colors
-    white_columns = [0]
-    green_columns = [1, 2]
-    yellow_columns = [3, 4]
+    white_columns = [0, 1]
+    green_columns = [2, 3]
+    yellow_columns = [4, 5]
 
     # Apply different colors to different column ranges
-    style = TableStyle([('BACKGROUND', (col, 0), (col, -1), colors.white) for col in white_columns] +
-                       [('BACKGROUND', (col, 0), (col, -1), green_hex) for col in green_columns] +
-                       [('BACKGROUND', (col, 0), (col, -1), yellow_hex) for col in yellow_columns] +
-                       [('TEXTCOLOR', (0, 0), (-1, 0), colors.black),
-                        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-                        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-                        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
-                        ('BACKGROUND', (0, 1), (-1, -1), colors.floralwhite),
-                        ('GRID', (0, 0), (-1, -1), 1, colors.black)]
-                       )
+    style = TableStyle([
+        ('BACKGROUND', (col, 0), (col, -1), colors.white) for col in white_columns
+    ] + [
+        ('BACKGROUND', (col, 0), (col, -1), green_hex) for col in green_columns
+    ] + [
+        ('BACKGROUND', (col, 0), (col, -1), yellow_hex) for col in yellow_columns
+    ] + [
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.black),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.floralwhite),
+        ('GRID', (0, 0), (-1, -1), 1, colors.black)
+    ])
+
     table.setStyle(style)
 
     # Add title and table to the story

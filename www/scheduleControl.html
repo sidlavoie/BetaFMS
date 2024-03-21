@@ -22,12 +22,36 @@
         <input type="text" id="cycletime" name="cycletime" value="{{ cycletime }}" placeholder="Default: {{ cycletime }}"><br>
     <label for="amduration">Durée de la pause d'avant-midi (minutes):</label>
         <input type="text" id="amduration" name="amduration" value="{{ amduration }}" placeholder="Default: {{ amduration }}"><br>
-    <label for="lunchduration">Durée de la pause du midi (minutes):</label>
+    <label for="lunchduration">Durée de la pause du dîner (minutes):</label>
         <input type="text" id="lunchduration" name="lunchduration" value="{{ lunchduration }}" placeholder="Default: {{ lunchduration }}"><br>
     <label for="pmduration">Durée de la pause d'après midi (minutes):</label>
         <input type="text" id="pmduration" name="pmduration" value="{{ pmduration }}" placeholder="Default: {{ pmduration }}"><br>
-    <input type="submit" value="+">
+    <input type="submit" value="Générer">
 </form>
+
+<table id=qualMatchTable>
+    <tr>
+        <th>Match</th>
+        <th>Heure</th>
+        <th>Vert</th>
+        <th>Sous-Équipe Vert</th>
+        <th>Jaune</th>
+        <th>Sous-Équipe Jaune</th>
+    </tr>
+
+    {% for sch in generated_schedule %}
+    <tr {%if sch[2] == "Dîner" %}class="greenRow" {%elif sch[2] == "Pause" %}class="yellowRow"{% endif %}>
+        <td>{{ sch[0] }}</td>
+        <td>{{ sch[1] }}</td>
+        <td>{{ sch[2] }}</td>
+        <td>{{ sch[3] }}</td>
+        <td>{{ sch[4] }}</td>
+        <td>{{ sch[5] }}</td>
+    </tr>
+    {% endfor %}
+
+</table>
+    
 <form action="/" method="get">
     <input id="bottomLeftButton" type="submit" value="Retour">
 </form>

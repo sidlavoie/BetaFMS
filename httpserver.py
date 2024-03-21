@@ -25,6 +25,20 @@ class MyServer(BaseHTTPRequestHandler):
 
                 self.wfile.write(bytes(html_content, "utf-8"))
                 return
+            
+            elif self.path =='/matchControl':
+                with open('www/matchControl.html', 'r',encoding='utf-8') as html_file:
+                    html_content = html_file.read()
+
+                self.wfile.write(bytes(html_content, "utf-8"))
+                return
+            
+            elif self.path =='/coffee':
+                with open('www/coffee.html', 'r',encoding='utf-8') as html_file:
+                    html_content = html_file.read()
+
+                self.wfile.write(bytes(html_content, "utf-8"))
+                return
 
             elif self.path == '/favicon.ico':
                 with open('www/static/images/favicon.ico', 'rb') as favicon_file:
@@ -39,18 +53,16 @@ class MyServer(BaseHTTPRequestHandler):
 
             elif self.path.startswith("/add_team"):
                 template = env.get_template("www/add_team.html")
-
-                 # Example team data
                 teams = getTeamsTable()
 
                 rendered_template = template.render(teams=teams)
 
                 self.wfile.write(rendered_template.encode('utf-8'))
-                self.end_headers()
                 return
 
             elif self.path.startswith('/scheduleControl'):
                 template = env.get_template("www/scheduleControl.html")
+                generated_schedule = getQualMatchTable()
 
                 rendered_template = template.render(
                     day=schedule_conf.day.strftime("%Y-%m-%d"),
@@ -61,12 +73,17 @@ class MyServer(BaseHTTPRequestHandler):
                     cycletime=schedule_conf.cycletime,
                     amduration=schedule_conf.amduration,
                     lunchduration=schedule_conf.lunchduration,
-                    pmduration=schedule_conf.pmduration
+                    pmduration=schedule_conf.pmduration, generated_schedule=generated_schedule
                 )
 
                 self.send_response(200)
                 self.send_header('Content-type', 'text/html')
                 self.wfile.write(rendered_template.encode('utf-8'))
+                self.end_headers()
+                return
+            
+            elif self.path.startswith('/brew'):
+                self.send_response(418)
                 self.end_headers()
                 return
 
@@ -197,7 +214,11 @@ class MyServer(BaseHTTPRequestHandler):
                                                                           schedule_conf.amduration, schedule_conf.pmbreaktime, schedule_conf.pmduration, schedule_conf.lunchtime,
                                                                           schedule_conf.lunchduration)
                 self.send_response(302)
-                self.send_header("Location", "/")
+                self.send_header("Location", "/scheduleControl")
+                self.end_headers()
+            elif self.path =='/matchControl':
+                self.send_response(302)
+                self.send_header("Location","/matchControl")
                 self.end_headers()
 
             elif self.path == '/download_schedule':
@@ -266,7 +287,8 @@ class MyServer(BaseHTTPRequestHandler):
                 self.end_headers()
             
             else:
-                self.send_response(404)
+                self.send_response(302)
+                self.send_header("Location","/404.html")
                 self.end_headers()
 
         except Exception as e:

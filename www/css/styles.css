@@ -37,6 +37,18 @@
     cursor: pointer;
 }
 
+#topLeftButton {
+    position: fixed;
+    top: 10px; /* Adjust the distance from the bottom as needed */
+    left: 10px;   /* Adjust the distance from the left as needed */
+    background-color: #1167d0;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
 table {
             width: 100%;
             border-collapse: collapse;
@@ -59,6 +71,32 @@ table {
 
 body {
     font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    padding-bottom: 50px;
+}
+
+.container {
+    height: 100vh;
+    background: linear-gradient(to right, #16E00F 0%, #ffffff 20%, #ffffff 80%, #E0E200 100%);
+}
+
+.content {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    color: black;
+}
+
+.greenRow {
+    background-color: #16E00F;
+}
+
+.yellowRow {
+    background-color: #FFFF00;
 }
 
 h1, h2, h3, h4, h5, h6 {
