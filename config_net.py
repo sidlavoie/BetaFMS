@@ -1,4 +1,4 @@
-from netmiko import *
+from netmiko import ConnectHandler
 from db_main import *
 from misc import *
 import re

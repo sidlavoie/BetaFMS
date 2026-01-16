@@ -235,12 +235,15 @@ class MyServer(BaseHTTPRequestHandler):
                     self.wfile.write(pdf.read())
 
             elif self.path == '/loadnextmatch':
-                loadNextMatch()
-
-                self.send_response(302)
-                self.send_header("Location", "/")
-                self.end_headers()
-
+                generated_schedule = getQualMatchTable()
+                if len(generated_schedule) > 0:
+                    loadNextMatch()
+                    self.send_response(302)
+                    self.send_header("Location", "/")
+                    self.end_headers()
+                else:
+                    self.handle_error(500, "Match not generated yet!")
+                    
             elif self.path == '/teamadd':
                 form = cgi.FieldStorage(
                     fp=self.rfile,
