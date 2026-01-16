@@ -14,6 +14,7 @@ from db_main import getTeamsNumberList
 env = Environment(loader=FileSystemLoader('.'))
 class MyServer(BaseHTTPRequestHandler):
     def do_GET(self):
+        """Handles GET requests"""
         try:
             self.send_response(200)
             #self.send_header("Content-type", "text/html")
@@ -183,6 +184,7 @@ class MyServer(BaseHTTPRequestHandler):
             self.handle_error(500, str(e))
 
     def do_POST(self):
+        """Handles POST requests"""
         try:
             if self.path == '/generate_schedule':
 
@@ -310,6 +312,7 @@ class MyServer(BaseHTTPRequestHandler):
 
 
 def run_server(hostname, port):
+    """Starts the web server and gracefully closes it in case of keyboard interrupt"""
     webserver = HTTPServer((hostname, port), MyServer)
     print("Server started http://%s:%s" % (hostname, port))
 
